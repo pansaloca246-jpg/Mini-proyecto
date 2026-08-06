@@ -63,6 +63,110 @@
             <span>El sistema de diseño, el inventario y el almacenamiento persistente ya están listos para usarse.</span>
           </section>
 
+          <section class="metrics-grid" aria-label="Tarjetas de métricas">
+            <article class="metric-card" aria-labelledby="metric-clientes-label">
+              <p class="metric-card__label" id="metric-clientes-label">Clientes</p>
+              <p class="metric-card__value" id="metric-clientes">0</p>
+              <p class="metric-card__detail">Usuarios activos registrados</p>
+            </article>
+            <article class="metric-card" aria-labelledby="metric-productos-label">
+              <p class="metric-card__label" id="metric-productos-label">Productos</p>
+              <p class="metric-card__value" id="metric-productos">0</p>
+              <p class="metric-card__detail">Artículos disponibles en inventario</p>
+            </article>
+            <article class="metric-card" aria-labelledby="metric-proveedores-label">
+              <p class="metric-card__label" id="metric-proveedores-label">Proveedores</p>
+              <p class="metric-card__value" id="metric-proveedores">0</p>
+              <p class="metric-card__detail">Registros guardados en localStorage</p>
+            </article>
+          </section>
+
+          <section class="card card--panel" aria-labelledby="proveedores-title">
+            <div class="card__header">
+              <div>
+                <p class="eyebrow">CRUD de proveedores</p>
+                <h3 id="proveedores-title">Gestión de proveedores</h3>
+              </div>
+              <button class="btn btn--primary" type="button" id="btn-nuevo-proveedor">Nuevo proveedor</button>
+            </div>
+            <div class="card__body">
+              <p class="card__description">Administra proveedores con campos de ID, empresa, contacto, teléfono y categoría. Pronto añadiremos la interacción con el modal.</p>
+              <div class="table-wrapper">
+                <table class="table" aria-label="Tabla de proveedores">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Nombre / Empresa</th>
+                      <th scope="col">Contacto</th>
+                      <th scope="col">Teléfono</th>
+                      <th scope="col">Categoría</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="proveedores-table-body">
+                    <tr>
+                      <td>1</td>
+                      <td>Tech Supply S.A.</td>
+                      <td>Ana Pérez</td>
+                      <td>+57 300 123 4567</td>
+                      <td>Electrónica</td>
+                      <td class="table__actions">
+                        <button class="btn btn--secondary btn--icon" type="button">Editar</button>
+                        <button class="btn btn--danger btn--icon" type="button">Eliminar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="card card--panel" aria-labelledby="form-proveedor-title">
+            <div class="card__header">
+              <div>
+                <h3 id="form-proveedor-title">Formulario de proveedor</h3>
+                <p class="card__description">Utiliza este formulario para crear o editar proveedores con validación básica.</p>
+              </div>
+            </div>
+            <form class="form-grid" id="form-proveedor" novalidate>
+              <div class="form-group form-group--full">
+                <label class="label" for="proveedor-id">ID</label>
+                <input class="input" type="text" id="proveedor-id" name="proveedorId" placeholder="Ej. 1" readonly />
+                <span class="form-help">El ID se genera automáticamente al crear.</span>
+              </div>
+              <div class="form-group">
+                <label class="label" for="proveedor-nombre">Nombre / Empresa</label>
+                <input class="input" type="text" id="proveedor-nombre" name="proveedorNombre" placeholder="Proveedor o empresa" required />
+                <span class="form-error" id="error-nombre"></span>
+              </div>
+              <div class="form-group">
+                <label class="label" for="proveedor-contacto">Contacto</label>
+                <input class="input" type="text" id="proveedor-contacto" name="proveedorContacto" placeholder="Nombre del contacto" required />
+                <span class="form-error" id="error-contacto"></span>
+              </div>
+              <div class="form-group">
+                <label class="label" for="proveedor-telefono">Teléfono</label>
+                <input class="input" type="tel" id="proveedor-telefono" name="proveedorTelefono" placeholder="+57 300 123 4567" required />
+                <span class="form-error" id="error-telefono"></span>
+              </div>
+              <div class="form-group">
+                <label class="label" for="proveedor-categoria">Categoría</label>
+                <select class="select" id="proveedor-categoria" name="proveedorCategoria" required>
+                  <option value="">Seleccione una categoría</option>
+                  <option value="Electrónica">Electrónica</option>
+                  <option value="Papelería">Papelería</option>
+                  <option value="Muebles">Muebles</option>
+                  <option value="Servicios">Servicios</option>
+                </select>
+                <span class="form-error" id="error-categoria"></span>
+              </div>
+              <div class="form-group form-group--full form-actions">
+                <button class="btn btn--primary" type="submit">Guardar proveedor</button>
+                <button class="btn btn--ghost" type="reset">Limpiar campos</button>
+              </div>
+            </form>
+          </section>
+
           <section class="card">
             <div class="card__header">
               <h3>Resumen operativo</h3>
