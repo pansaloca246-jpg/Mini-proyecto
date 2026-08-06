@@ -144,6 +144,20 @@
         localStorage.setItem(clave, JSON.stringify(valor));
       }
 
+      // --- Actualizar Usuario Logueado ---
+      const sessionData = leerLS('adminCredentials', { username: 'Samu' });
+      const currentUserName = sessionData.username.split('@')[0]; // Usa la primera parte si es correo
+      
+      const topbarUserSpan = document.querySelector('.topbar__user span:last-child');
+      if (topbarUserSpan) {
+          topbarUserSpan.textContent = `${currentUserName} · Admin`;
+      }
+      
+      const pageTitle = document.getElementById('page-title');
+      if (pageTitle) {
+          pageTitle.textContent = `¡Bienvenido de nuevo, ${currentUserName}!`;
+      }
+
       // --- Leer datos del sistema ---
       const productos   = leerLS('productos', []);
       const clientes    = leerLS('clientes', []);

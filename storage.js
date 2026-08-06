@@ -64,3 +64,16 @@ export function existe(clave) {
 
   return storage.getItem(clave) !== null;
 }
+
+// Actualizar nombre de usuario globalmente en la topbar
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const sessionData = obtener('adminCredentials', { username: 'Usuario' });
+    const currentUserName = sessionData.username.split('@')[0];
+    
+    const topbarUserSpan = document.querySelector('.topbar__user span:last-child');
+    if (topbarUserSpan) {
+        topbarUserSpan.textContent = `${currentUserName} · Admin`;
+    }
+  });
+}

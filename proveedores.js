@@ -1,4 +1,5 @@
 import { eliminar, existe, generarId, guardar, obtener } from './storage.js';
+import { showConfirm } from './confirm.js';
 
 const STORAGE_KEY = 'proveedores';
 const tableBody = document.getElementById('proveedores-table-body');
@@ -149,7 +150,7 @@ function saveProvider(event) {
   closeModal();
 }
 
-function handleTableActions(event) {
+async function handleTableActions(event) {
   const button = event.target.closest('button[data-action]');
   if (!button) return;
 
@@ -165,7 +166,8 @@ function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
-    if (window.confirm(`¿Deseas eliminar a ${prov.nombre}?`)) {
+    const confirmed = await showConfirm(`¿Deseas eliminar a ${prov.nombre}?`);
+    if (confirmed) {
       const nuevos = proveedores.filter((item) => item.id !== provId);
       guardar(STORAGE_KEY, nuevos);
       showToast('Proveedor eliminado', 'danger');

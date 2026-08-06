@@ -1,4 +1,5 @@
 import { eliminar, existe, generarId, guardar, obtener } from './storage.js';
+import { showConfirm } from './confirm.js';
 
 const STORAGE_KEY = 'productos';
 const modal = document.getElementById('product-modal');
@@ -145,31 +146,29 @@ function saveProduct(event) {
   closeModal();
 }
 
-function handleTableActions(event) {
+async function handleTableActions(event) {
   const button = event.target.closest('button[data-action]');
+  if (!button) return;
 
-  if (!button) {
-    return;
-  }
-
-  const productoId = button.dataset.id;
+  const prodId = button.dataset.id;
   const productos = obtener(STORAGE_KEY, []);
-  const producto = productos.find((item) => item.id === productoId);
+  const prod = productos.find((item) => item.id === prodId);
 
-  if (!producto) {
-    return;
-  }
+  if (!prod) return;
 
   if (button.dataset.action === 'edit') {
-    openModal(producto);
+    openModal(prod);
     return;
   }
 
-  if (window.confirm(`¿Deseas eliminar ${producto.name}?`)) {
-    const nuevosProductos = productos.filter((item) => item.id !== productoId);
-    guardar(STORAGE_KEY, nuevosProductos);
-    showToast('Producto eliminado', 'danger');
-    renderProducts();
+  if (button.dataset.action === 'delete') {
+    const confirmed = await showConfirm(`¿Deseas eliminar ${prod.name}?`);
+    if (confirmed) {
+      const nuevos = productos.filter((item) => item.id !== prodId);
+      guardar(STORAGE_KEY, nuevos);
+      showToast('Producto eliminado', 'danger');
+      renderProducts();
+    }
   }
 }
 

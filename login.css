@@ -217,14 +217,64 @@ body {
 .form-panel {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 3rem;
     background-color: var(--bg-dark);
+    overflow: hidden;
+    position: relative;
+}
+
+.forms-slider {
+    display: flex;
+    width: 200%;
+    flex-shrink: 0;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-panel.is-registering .forms-slider {
+    transform: translateX(-50%);
 }
 
 .form-container {
+    flex: 0 0 50%;
+    width: 50%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-container > * {
     width: 100%;
     max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth-toggle {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.text-link {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: var(--transition-smooth);
+}
+
+.text-link:hover, .text-link:focus {
+    text-decoration-color: var(--primary);
+    color: var(--primary-hover);
+    outline: none;
 }
 
 .form-header {

@@ -1,4 +1,5 @@
 import { eliminar, existe, generarId, guardar, obtener } from './storage.js';
+import { showConfirm } from './confirm.js';
 
 const STORAGE_KEY = 'clientes';
 const tableBody = document.getElementById('clientes-table-body');
@@ -149,7 +150,7 @@ function saveClient(event) {
   closeModal();
 }
 
-function handleTableActions(event) {
+async function handleTableActions(event) {
   const button = event.target.closest('button[data-action]');
   if (!button) return;
 
@@ -165,7 +166,8 @@ function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
-    if (window.confirm(`¿Deseas eliminar a ${cli.nombre}?`)) {
+    const confirmed = await showConfirm(`¿Deseas eliminar a ${cli.nombre}?`);
+    if (confirmed) {
       const nuevos = clientes.filter((item) => item.id !== cliId);
       guardar(STORAGE_KEY, nuevos);
       showToast('Cliente eliminado', 'danger');
