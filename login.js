@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideAlert();
 
         const enteredUser = usernameInput.value.trim();
-        const enteredPass = passwordInput.value;
+        const enteredPass = passwordInput.value.trim();
 
         // Validaciones previas de campos vacíos (HTML5 los valida pero reforzamos en JS)
         if (!enteredUser) {

@@ -31,13 +31,13 @@
             <span aria-hidden="true">📦</span>
             <span>Productos</span>
           </a>
+          <a class="sidebar__link" href="clientes.html">
+            <span aria-hidden="true">👥</span>
+            <span>Clientes</span>
+          </a>
           <a class="sidebar__link" href="proveedores.html">
             <span aria-hidden="true">🧾</span>
             <span>Proveedores</span>
-          </a>
-          <a class="sidebar__link" href="proveedores-formulario.html">
-            <span aria-hidden="true">📝</span>
-            <span>Formulario</span>
           </a>
           <a class="sidebar__link" href="resumen.html">
             <span aria-hidden="true">📈</span>
@@ -75,6 +75,11 @@
               <p class="metric-card__value" id="metric-productos-value">0</p>
               <p class="metric-card__detail">registrados en el inventario</p>
             </div>
+            <div class="metric-card" id="metric-clientes">
+              <p class="metric-card__label">Clientes</p>
+              <p class="metric-card__value" id="metric-clientes-value">0</p>
+              <p class="metric-card__detail">registrados en el sistema</p>
+            </div>
             <div class="metric-card" id="metric-proveedores">
               <p class="metric-card__label">Proveedores</p>
               <p class="metric-card__value" id="metric-proveedores-value">0</p>
@@ -96,7 +101,7 @@
               </div>
             </div>
             <div class="card__body" style="padding: 0 var(--space-6) var(--space-6);">
-              <p class="card__description">Aquí comienza tu panel operativo. Utiliza el menú lateral para acceder rápidamente a productos, proveedores, formularios y el resumen completo.</p>
+              <p class="card__description">Aquí comienza tu panel operativo. Utiliza el menú lateral para acceder rápidamente a productos, clientes, proveedores y el resumen completo.</p>
             </div>
           </section>
 
@@ -141,6 +146,7 @@
 
       // --- Leer datos del sistema ---
       const productos   = leerLS('productos', []);
+      const clientes    = leerLS('clientes', []);
       const proveedores = leerLS('proveedores', []);
 
       // Análisis de datos reales
@@ -151,7 +157,8 @@
 
       // --- Métricas en Vivo ---
       document.getElementById('metric-productos-value').textContent   = productos.length;
-      document.getElementById('metric-proveedores-value').textContent  = proveedores.length;
+      document.getElementById('metric-clientes-value').textContent    = clientes.length;
+      document.getElementById('metric-proveedores-value').textContent = proveedores.length;
       document.getElementById('metric-alertas-value').textContent      = lowStockProducts.length;
 
       // --- Saludo dinámico con hora ---
@@ -196,31 +203,33 @@
           });
         }
 
-        // Tarea 3: No hay proveedores registrados
+        // Tarea 3: No hay clientes registrados
+        if (clientes.length === 0) {
+          tasks.push({
+            id: 'no-clients',
+            icon: '👥',
+            priority: 'medium',
+            title: 'Registrar un cliente',
+            desc: 'No hay clientes en el sistema. Agrega al menos uno para llevar el control.',
+            deadline: 'Hoy',
+            deadlineUrgent: false,
+            link: 'clientes.html',
+          });
+        }
+
+        // Tarea 4: No hay proveedores registrados
         if (proveedores.length === 0) {
           tasks.push({
             id: 'no-providers',
             icon: '🧾',
             priority: 'medium',
             title: 'Registrar un proveedor',
-            desc: 'No hay proveedores en el sistema. Agrega al menos uno desde el formulario.',
+            desc: 'No hay proveedores en el sistema. Agrega al menos uno para asegurar abastecimiento.',
             deadline: 'Hoy',
             deadlineUrgent: false,
-            link: 'proveedores-formulario.html',
+            link: 'proveedores.html',
           });
         }
-
-        // Tarea 4: Completar formulario (siempre visible como recordatorio)
-        tasks.push({
-          id: 'fill-form',
-          icon: '📝',
-          priority: 'medium',
-          title: 'Completar formulario de nuevo proveedor',
-          desc: 'Utiliza el formulario para registrar o editar proveedores del sistema.',
-          deadline: 'Pendiente',
-          deadlineUrgent: false,
-          link: 'proveedores-formulario.html',
-        });
 
         // Tarea 5: Revisar resumen operativo
         tasks.push({
@@ -228,7 +237,7 @@
           icon: '📈',
           priority: 'low',
           title: 'Revisar el resumen operativo',
-          desc: `El sistema tiene ${productos.length} productos y ${proveedores.length} proveedores. Revisa el estado general.`,
+          desc: `El sistema tiene ${productos.length} productos, ${clientes.length} clientes y ${proveedores.length} proveedores.`,
           deadline: 'Cuando puedas',
           deadlineUrgent: false,
           link: 'resumen.html',

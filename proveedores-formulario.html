@@ -82,15 +82,15 @@
                 </div>
                 <div class="form-group">
                   <label class="label" for="proveedor-nombre">Nombre / Empresa</label>
-                  <input class="input" type="text" id="proveedor-nombre" required />
+                  <input class="input" type="text" id="proveedor-nombre" required maxlength="50" />
                 </div>
                 <div class="form-group">
                   <label class="label" for="proveedor-contacto">Contacto</label>
-                  <input class="input" type="text" id="proveedor-contacto" required />
+                  <input class="input" type="text" id="proveedor-contacto" required maxlength="50" />
                 </div>
                 <div class="form-group">
                   <label class="label" for="proveedor-telefono">Teléfono</label>
-                  <input class="input" type="tel" id="proveedor-telefono" required />
+                  <input class="input" type="tel" id="proveedor-telefono" required maxlength="15" />
                 </div>
                 <div class="form-group">
                   <label class="label" for="proveedor-categoria">Categoría</label>
@@ -113,13 +113,8 @@
       </div>
     </div>
 
-    <script>
-      const menuButton = document.getElementById('menu-toggle');
-      const sidebar = document.getElementById('sidebar');
-      menuButton?.addEventListener('click', () => sidebar?.classList.toggle('is-open'));
-      sidebar?.querySelectorAll('.sidebar__link').forEach((link) => {
-        link.addEventListener('click', () => sidebar.classList.remove('is-open'));
-      });
-    </script>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="proveedores-formulario.js"></script>
   </body>
 </html>
