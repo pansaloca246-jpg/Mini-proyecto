@@ -635,3 +635,246 @@ ul {
     overflow-x: auto;
   }
 }
+
+/* ==========================================================================
+   Saludo mejorado
+   ========================================================================== */
+.greeting-sub {
+  margin: 0.35rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   Sección de Tareas Pendientes
+   ========================================================================== */
+.tasks-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tasks-section__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tasks-section__icon {
+  font-size: 1.25rem;
+}
+
+.tasks-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Lista de Tareas */
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Tarea Individual */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid transparent;
+  transition: background-color 0.25s ease, opacity 0.3s ease, border-color 0.25s ease;
+}
+
+.task-item:hover {
+  background: var(--color-surface-2);
+}
+
+/* Bordes de prioridad */
+.task-item--high {
+  border-left-color: var(--color-danger);
+}
+.task-item--medium {
+  border-left-color: var(--color-warning);
+}
+.task-item--low {
+  border-left-color: var(--color-primary);
+}
+
+/* Estado completado */
+.task-item--done {
+  opacity: 0.45;
+}
+
+.task-item--done .task-item__title {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* Icono de categoría */
+.task-item__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.task-item__icon--high {
+  background: rgba(239, 68, 68, 0.12);
+  border: 2px solid rgba(239, 68, 68, 0.3);
+}
+.task-item__icon--medium {
+  background: rgba(245, 158, 11, 0.12);
+  border: 2px solid rgba(245, 158, 11, 0.3);
+}
+.task-item__icon--low {
+  background: rgba(54, 184, 255, 0.12);
+  border: 2px solid rgba(54, 184, 255, 0.3);
+}
+
+/* Cuerpo de la tarea */
+.task-item__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-item__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  transition: color 0.25s ease;
+}
+
+.task-item__desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+/* Meta: Deadline */
+.task-item__meta {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.task-item__deadline {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.task-item__deadline--urgent {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* Custom Checkbox */
+.task-item__check {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.task-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.task-checkmark {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 2px solid var(--color-border);
+  border-radius: 0.35rem;
+  background: transparent;
+  transition: all 0.2s ease;
+  display: grid;
+  place-items: center;
+}
+
+.task-checkmark::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+
+.task-item__check:hover .task-checkmark {
+  border-color: var(--color-primary);
+}
+
+.task-checkbox:checked ~ .task-checkmark {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.task-checkbox:checked ~ .task-checkmark::after {
+  transform: rotate(45deg) scale(1);
+}
+
+/* ==========================================================================
+   Responsive: Tareas
+   ========================================================================== */
+@media (max-width: 48rem) {
+  .task-item {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .task-item__meta {
+    order: 3;
+    width: 100%;
+    text-align: left;
+    padding-left: 3.75rem;
+  }
+
+  .task-item__check {
+    order: -1;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 30rem) {
+  .task-item__icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1rem;
+  }
+
+  .tasks-section__title {
+    font-size: 1rem;
+    flex-wrap: wrap;
+  }
+}
