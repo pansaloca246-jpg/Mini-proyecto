@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Administrativo - Inicio</title>
+    <title>Dashboard Administrativo - Formulario Proveedor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -23,7 +23,7 @@
         </div>
 
         <nav class="sidebar__nav" aria-label="Navegación principal">
-          <a class="sidebar__link sidebar__link--active" href="index.html">
+          <a class="sidebar__link" href="index.html">
             <span aria-hidden="true">📊</span>
             <span>Inicio</span>
           </a>
@@ -35,7 +35,7 @@
             <span aria-hidden="true">🧾</span>
             <span>Proveedores</span>
           </a>
-          <a class="sidebar__link" href="proveedores-formulario.html">
+          <a class="sidebar__link sidebar__link--active" href="proveedores-formulario.html">
             <span aria-hidden="true">📝</span>
             <span>Formulario</span>
           </a>
@@ -62,20 +62,51 @@
         <main class="content">
           <section class="page-header" aria-labelledby="page-title">
             <div>
-              <p class="eyebrow">Panel administrativo</p>
-              <h2 id="page-title">Bienvenido, Samu</h2>
+              <p class="eyebrow">Registro de proveedore</p>
+              <h2 id="page-title">Formulario de proveedor</h2>
             </div>
           </section>
 
-          <section class="card" aria-labelledby="welcome-title">
+          <section class="card" aria-labelledby="form-title">
             <div class="card__header">
               <div>
-                <p class="eyebrow">Inicio</p>
-                <h3 id="welcome-title">Bienvenida al dashboard</h3>
+                <h3 id="form-title">Crear o editar proveedor</h3>
+                <p class="card__description">Completa los datos y guárdalos desde este apartado independiente.</p>
               </div>
             </div>
             <div class="card__body">
-              <p class="card__description">Aquí comienza tu panel administrativo. Usa el menú lateral para acceder a productos, proveedores, el formulario y el resumen operativo.</p>
+              <form class="form-grid" novalidate>
+                <div class="form-group form-group--full">
+                  <label class="label" for="proveedor-id">ID</label>
+                  <input class="input" type="text" id="proveedor-id" placeholder="Ej. 1" readonly />
+                </div>
+                <div class="form-group">
+                  <label class="label" for="proveedor-nombre">Nombre / Empresa</label>
+                  <input class="input" type="text" id="proveedor-nombre" required />
+                </div>
+                <div class="form-group">
+                  <label class="label" for="proveedor-contacto">Contacto</label>
+                  <input class="input" type="text" id="proveedor-contacto" required />
+                </div>
+                <div class="form-group">
+                  <label class="label" for="proveedor-telefono">Teléfono</label>
+                  <input class="input" type="tel" id="proveedor-telefono" required />
+                </div>
+                <div class="form-group">
+                  <label class="label" for="proveedor-categoria">Categoría</label>
+                  <select class="select" id="proveedor-categoria" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="Electrónica">Electrónica</option>
+                    <option value="Papelería">Papelería</option>
+                    <option value="Muebles">Muebles</option>
+                    <option value="Servicios">Servicios</option>
+                  </select>
+                </div>
+                <div class="form-group form-group--full form-actions">
+                  <button class="btn btn--primary" type="submit">Guardar proveedor</button>
+                  <button class="btn btn--ghost" type="reset">Limpiar</button>
+                </div>
+              </form>
             </div>
           </section>
         </main>

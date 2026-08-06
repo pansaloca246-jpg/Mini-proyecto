@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Administrativo - Inicio</title>
+    <title>Dashboard Administrativo - Resumen</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -23,7 +23,7 @@
         </div>
 
         <nav class="sidebar__nav" aria-label="Navegación principal">
-          <a class="sidebar__link sidebar__link--active" href="index.html">
+          <a class="sidebar__link" href="index.html">
             <span aria-hidden="true">📊</span>
             <span>Inicio</span>
           </a>
@@ -39,7 +39,7 @@
             <span aria-hidden="true">📝</span>
             <span>Formulario</span>
           </a>
-          <a class="sidebar__link" href="resumen.html">
+          <a class="sidebar__link sidebar__link--active" href="resumen.html">
             <span aria-hidden="true">📈</span>
             <span>Resumen</span>
           </a>
@@ -62,20 +62,45 @@
         <main class="content">
           <section class="page-header" aria-labelledby="page-title">
             <div>
-              <p class="eyebrow">Panel administrativo</p>
-              <h2 id="page-title">Bienvenido, Samu</h2>
+              <p class="eyebrow">Resumen operativo</p>
+              <h2 id="page-title">Estado general del panel</h2>
             </div>
           </section>
 
-          <section class="card" aria-labelledby="welcome-title">
+          <section class="card" aria-labelledby="summary-title">
             <div class="card__header">
               <div>
-                <p class="eyebrow">Inicio</p>
-                <h3 id="welcome-title">Bienvenida al dashboard</h3>
+                <h3 id="summary-title">Resumen del sistema</h3>
+                <p class="card__description">Aquí puedes ver el estado general de los módulos del dashboard.</p>
               </div>
             </div>
-            <div class="card__body">
-              <p class="card__description">Aquí comienza tu panel administrativo. Usa el menú lateral para acceder a productos, proveedores, el formulario y el resumen operativo.</p>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Módulo</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Observación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Diseño global</td>
+                    <td><span class="badge badge--success">Listo</span></td>
+                    <td>Paleta, componentes y responsive configurados.</td>
+                  </tr>
+                  <tr>
+                    <td>Productos</td>
+                    <td><span class="badge badge--success">Listo</span></td>
+                    <td>CRUD con modal, validación y notificaciones.</td>
+                  </tr>
+                  <tr>
+                    <td>Proveedores</td>
+                    <td><span class="badge badge--info">En proceso</span></td>
+                    <td>Separado por secciones para completar la lógica.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </section>
         </main>

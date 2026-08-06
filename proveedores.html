@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Administrativo - Inicio</title>
+    <title>Dashboard Administrativo - Proveedores</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -23,7 +23,7 @@
         </div>
 
         <nav class="sidebar__nav" aria-label="Navegación principal">
-          <a class="sidebar__link sidebar__link--active" href="index.html">
+          <a class="sidebar__link" href="index.html">
             <span aria-hidden="true">📊</span>
             <span>Inicio</span>
           </a>
@@ -31,7 +31,7 @@
             <span aria-hidden="true">📦</span>
             <span>Productos</span>
           </a>
-          <a class="sidebar__link" href="proveedores.html">
+          <a class="sidebar__link sidebar__link--active" href="proveedores.html">
             <span aria-hidden="true">🧾</span>
             <span>Proveedores</span>
           </a>
@@ -62,20 +62,47 @@
         <main class="content">
           <section class="page-header" aria-labelledby="page-title">
             <div>
-              <p class="eyebrow">Panel administrativo</p>
-              <h2 id="page-title">Bienvenido, Samu</h2>
+              <p class="eyebrow">Gestión de proveedores</p>
+              <h2 id="page-title">CRUD de proveedores</h2>
+            </div>
+            <div class="page-actions">
+              <a class="btn btn--primary" href="proveedores-formulario.html">Nuevo proveedor</a>
             </div>
           </section>
 
-          <section class="card" aria-labelledby="welcome-title">
+          <section class="card" aria-labelledby="proveedores-title">
             <div class="card__header">
               <div>
-                <p class="eyebrow">Inicio</p>
-                <h3 id="welcome-title">Bienvenida al dashboard</h3>
+                <h3 id="proveedores-title">Listado de proveedores</h3>
+                <p class="card__description">Aquí se muestra el listado principal para editar o eliminar proveedores.</p>
               </div>
             </div>
-            <div class="card__body">
-              <p class="card__description">Aquí comienza tu panel administrativo. Usa el menú lateral para acceder a productos, proveedores, el formulario y el resumen operativo.</p>
+            <div class="table-wrapper">
+              <table class="table" aria-label="Tabla de proveedores">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Tech Supply S.A.</td>
+                    <td>Ana Pérez</td>
+                    <td>+57 300 123 4567</td>
+                    <td>Electrónica</td>
+                    <td class="table__actions">
+                      <a class="btn btn--secondary btn--icon" href="proveedores-formulario.html">Editar</a>
+                      <button class="btn btn--danger btn--icon" type="button">Eliminar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </section>
         </main>
