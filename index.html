@@ -1,14 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Mini proyecto: calculadora</h1>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administrativo - Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <a href="index.html" aria-label="Ir al inicio del dashboard">
+            <span class="sidebar__logo">CR</span>
+            <div>
+              <h1>CR-Tech</h1>
+              <p>Panel Admin</p>
+            </div>
+          </a>
+        </div>
 
+        <nav class="sidebar__nav" aria-label="Navegación principal">
+          <a class="sidebar__link sidebar__link--active" href="index.html">
+            <span aria-hidden="true">📊</span>
+            <span>Inicio</span>
+          </a>
+          <a class="sidebar__link" href="productos.html">
+            <span aria-hidden="true">📦</span>
+            <span>Productos</span>
+          </a>
+          <a class="sidebar__link" href="login.html">
+            <span aria-hidden="true">🔐</span>
+            <span>Cerrar sesión</span>
+          </a>
+        </nav>
+      </aside>
 
-    
-</body>
+      <div class="main-content">
+        <header class="topbar">
+          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">☰</button>
+          <div class="topbar__user">
+            <span aria-hidden="true">👤</span>
+            <span>Samu · Integrante 2</span>
+          </div>
+        </header>
+
+        <main class="content">
+          <section class="page-header" aria-labelledby="page-title">
+            <div>
+              <p class="eyebrow">Dashboard administrativo</p>
+              <h2 id="page-title">Bienvenido al panel</h2>
+            </div>
+            <div class="page-actions">
+              <a class="btn btn--primary" href="productos.html">Gestionar productos</a>
+            </div>
+          </section>
+
+          <section class="alert alert--success" aria-label="Estado del dashboard">
+            <span aria-hidden="true">✨</span>
+            <span>El sistema de diseño, el inventario y el almacenamiento persistente ya están listos para usarse.</span>
+          </section>
+
+          <section class="card">
+            <div class="card__header">
+              <h3>Resumen operativo</h3>
+              <span class="badge badge--info">En desarrollo</span>
+            </div>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Módulo</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Observación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Diseño global</td>
+                    <td><span class="badge badge--success">Listo</span></td>
+                    <td>Paleta, componentes y responsive configurados.</td>
+                  </tr>
+                  <tr>
+                    <td>Vista de productos</td>
+                    <td><span class="badge badge--success">Listo</span></td>
+                    <td>CRUD básico con modal, validación y toasts.</td>
+                  </tr>
+                  <tr>
+                    <td>Persistencia</td>
+                    <td><span class="badge badge--success">Listo</span></td>
+                    <td>Datos guardados en localStorage con helper reutilizable.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const menuButton = document.getElementById('menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      menuButton?.addEventListener('click', () => sidebar?.classList.toggle('is-open'));
+      sidebar?.querySelectorAll('.sidebar__link').forEach((link) => {
+        link.addEventListener('click', () => sidebar.classList.remove('is-open'));
+      });
+    </script>
+  </body>
 </html>

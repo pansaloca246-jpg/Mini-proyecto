@@ -116,9 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('sessionActive', 'true');
             }
 
-            // Redirección inmediata hacia index.html
+            // Redirección inmediata hacia el dashboard de productos
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'productos.html';
             }, 600);
         }
     });
