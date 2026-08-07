@@ -126,6 +126,7 @@ ul {
   background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   font-weight: 700;
   color: white;
+  object-fit: cover;
 }
 
 .sidebar__brand h1 {

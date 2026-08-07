@@ -20,15 +20,6 @@ const categoryInput = document.getElementById('client-category');
 
 let toastTimer = null;
 
-// Cliente inicial predeterminado si no hay nada guardado
-const DEFAULT_CLIENT = {
-  id: '1',
-  nombre: 'Tech Corp S.A.',
-  email: 'contacto@techcorp.com',
-  telefono: '+506 8000 1234',
-  categoria: 'Corporativo'
-};
-
 function renderClients() {
   const clientes = obtener(STORAGE_KEY, []);
 
@@ -166,6 +157,14 @@ async function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
+    const pedidos = obtener('pedidos', []);
+    const isInOrder = pedidos.some(pedido => pedido.clienteId === cliId);
+
+    if (isInOrder) {
+      alert(`No se puede eliminar a ${cli.nombre} porque tiene uno o más pedidos asociados.`);
+      return;
+    }
+
     const confirmed = await showConfirm(`¿Deseas eliminar a ${cli.nombre}?`);
     if (confirmed) {
       const nuevos = clientes.filter((item) => item.id !== cliId);

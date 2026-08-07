@@ -16,6 +16,7 @@ const nameInput = document.getElementById('product-name');
 const categoryInput = document.getElementById('product-category');
 const priceInput = document.getElementById('product-price');
 const stockInput = document.getElementById('product-stock');
+const proveedorInput = document.getElementById('product-proveedor');
 const descriptionInput = document.getElementById('product-description');
 
 let toastTimer = null;
@@ -82,12 +83,18 @@ function openModal(product = null) {
   form.dataset.mode = product ? 'edit' : 'create';
   idInput.value = product?.id ?? '';
 
+  // Populate proveedores dropdown
+  const proveedores = obtener('proveedores', []);
+  proveedorInput.innerHTML = '<option value="">Selecciona un proveedor</option>' + 
+    proveedores.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('');
+
   if (product) {
     modalTitle.textContent = 'Editar producto';
     nameInput.value = product.name;
     categoryInput.value = product.category;
     priceInput.value = product.price;
     stockInput.value = product.stock;
+    proveedorInput.value = product.proveedor || '';
     descriptionInput.value = product.description;
   } else {
     modalTitle.textContent = 'Nuevo producto';
@@ -127,6 +134,7 @@ function saveProduct(event) {
     category: categoryInput.value,
     price: Number(priceInput.value),
     stock: Number(stockInput.value),
+    proveedor: proveedorInput.value,
     description: descriptionInput.value.trim(),
   };
 
@@ -162,6 +170,14 @@ async function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
+    const pedidos = obtener('pedidos', []);
+    const isInOrder = pedidos.some(pedido => pedido.productos.some(p => p.productoId === prodId));
+    
+    if (isInOrder) {
+      alert(`No se puede eliminar ${prod.name} porque está asociado a uno o más pedidos.`);
+      return;
+    }
+
     const confirmed = await showConfirm(`¿Deseas eliminar ${prod.name}?`);
     if (confirmed) {
       const nuevos = productos.filter((item) => item.id !== prodId);

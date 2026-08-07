@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administrativo - Pedidos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .order-products { margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 1rem; }
+      .order-product-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 0.5rem; margin-bottom: 0.5rem; align-items: end; }
+      .order-totals { margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); text-align: right; }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <a href="index.html" aria-label="Ir al inicio del dashboard">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40EKbFuhqbVontdTw2y-sOMCA9J7Jf5uhTNJw0AbHww&s" alt="Logo" class="sidebar__logo" />
+            <div>
+              <h1>CRTECH</h1>
+              <p>Panel Admin</p>
+            </div>
+          </a>
+        </div>
+
+        <nav class="sidebar__nav" aria-label="Navegación principal">
+          <a class="sidebar__link" href="index.html">
+            <span aria-hidden="true">📊</span>
+            <span>Inicio</span>
+          </a>
+          <a class="sidebar__link" href="productos.html">
+            <span aria-hidden="true">📦</span>
+            <span>Productos</span>
+          </a>
+          <a class="sidebar__link" href="clientes.html">
+            <span aria-hidden="true">👥</span>
+            <span>Clientes</span>
+          </a>
+          <a class="sidebar__link" href="proveedores.html">
+            <span aria-hidden="true">🧾</span>
+            <span>Proveedores</span>
+          </a>
+          <a class="sidebar__link sidebar__link--active" href="pedidos.html">
+            <span aria-hidden="true">🛒</span>
+            <span>Pedidos</span>
+          </a>
+          <a class="sidebar__link" href="resumen.html">
+            <span aria-hidden="true">📈</span>
+            <span>Resumen</span>
+          </a>
+          <a class="sidebar__link" href="login.html">
+            <span aria-hidden="true">🔐</span>
+            <span>Cerrar sesión</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="main-content">
+        <header class="topbar">
+          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">☰</button>
+          <div class="topbar__user">
+            <span aria-hidden="true">👤</span>
+            <span>Samu · Integrante 2</span>
+          </div>
+        </header>
+
+        <main class="content">
+          <section class="page-header" aria-labelledby="page-title">
+            <div>
+              <p class="eyebrow">Gestión de ventas</p>
+              <h2 id="page-title">Pedidos</h2>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn--primary" type="button" data-open-modal>+ Nuevo pedido</button>
+            </div>
+          </section>
+
+          <section class="card" aria-labelledby="orders-title">
+            <div class="card__header">
+              <h3 id="orders-title">Listado de pedidos</h3>
+              <span class="badge badge--info" id="order-count">0 pedidos</span>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="table" aria-describedby="orders-title">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Artículos</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-table-body"></tbody>
+              </table>
+            </div>
+
+            <div class="empty-state" id="empty-state">
+              <span class="empty-state__icon" aria-hidden="true">🛒</span>
+              <h3>No hay pedidos</h3>
+              <p>No hay pedidos registrados todavía. Crea el primero para empezar.</p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal" id="order-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="modal__backdrop" data-close-modal></div>
+      <div class="modal__content" style="max-width: 600px;">
+        <header class="modal__header">
+          <h3 id="modal-title">Nuevo pedido</h3>
+          <button class="btn btn--ghost btn--icon" type="button" data-close-modal aria-label="Cerrar modal">✕</button>
+        </header>
+
+        <form id="order-form" novalidate>
+          <input type="hidden" id="order-id" name="id" />
+
+          <div class="form-grid">
+            <div class="form-group form-group--full">
+              <label class="label" for="order-client">Cliente</label>
+              <select class="select" id="order-client" required>
+                <option value="">Selecciona un cliente</option>
+              </select>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="label" for="order-status">Estado</label>
+              <select class="select" id="order-status" required>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Entregado">Entregado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="order-products">
+            <h4>Productos</h4>
+            <div id="product-rows"></div>
+            <button class="btn btn--secondary" type="button" id="btn-add-product" style="margin-top: 1rem;">+ Añadir producto</button>
+          </div>
+
+          <div class="order-totals">
+            <p><strong>Total Artículos:</strong> <span id="total-items">0</span></p>
+            <p><strong>Total Pedido:</strong> $<span id="total-price">0.00</span></p>
+          </div>
+
+          <div class="modal__actions" style="margin-top: 1rem;">
+            <button class="btn btn--secondary" type="button" data-close-modal>Cancelar</button>
+            <button class="btn btn--primary" type="submit">Guardar pedido</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    
+    <script type="module" src="pedidos.js"></script>
+  </body>
+</html>

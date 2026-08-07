@@ -14,9 +14,9 @@
       <aside class="sidebar" id="sidebar">
         <div class="sidebar__brand">
           <a href="index.html" aria-label="Ir al inicio del dashboard">
-            <span class="sidebar__logo">CR</span>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40EKbFuhqbVontdTw2y-sOMCA9J7Jf5uhTNJw0AbHww&s" alt="Logo" class="sidebar__logo" />
             <div>
-              <h1>CR-Tech</h1>
+              <h1>CRTECH</h1>
               <p>Panel Admin</p>
             </div>
           </a>
@@ -38,6 +38,10 @@
           <a class="sidebar__link" href="proveedores.html">
             <span aria-hidden="true">🧾</span>
             <span>Proveedores</span>
+          </a>
+          <a class="sidebar__link" href="pedidos.html">
+            <span aria-hidden="true">🛒</span>
+            <span>Pedidos</span>
           </a>
           <a class="sidebar__link" href="resumen.html">
             <span aria-hidden="true">📈</span>
@@ -84,6 +88,11 @@
               <p class="metric-card__label">Proveedores</p>
               <p class="metric-card__value" id="metric-proveedores-value">0</p>
               <p class="metric-card__detail">activos en el sistema</p>
+            </div>
+            <div class="metric-card" id="metric-pedidos">
+              <p class="metric-card__label">Pedidos</p>
+              <p class="metric-card__value" id="metric-pedidos-value">0</p>
+              <p class="metric-card__detail" id="metric-pedidos-detail">$0.00 en ventas</p>
             </div>
             <div class="metric-card" id="metric-alertas">
               <p class="metric-card__label">Alertas de Stock</p>
@@ -162,6 +171,7 @@
       const productos   = leerLS('productos', []);
       const clientes    = leerLS('clientes', []);
       const proveedores = leerLS('proveedores', []);
+      const pedidos     = leerLS('pedidos', []);
 
       // Análisis de datos reales
       const lowStockThreshold = 5;
@@ -173,7 +183,11 @@
       document.getElementById('metric-productos-value').textContent   = productos.length;
       document.getElementById('metric-clientes-value').textContent    = clientes.length;
       document.getElementById('metric-proveedores-value').textContent = proveedores.length;
-      document.getElementById('metric-alertas-value').textContent      = lowStockProducts.length;
+      document.getElementById('metric-alertas-value').textContent     = lowStockProducts.length;
+      
+      const totalVentas = pedidos.reduce((sum, p) => sum + (p.estado !== 'Pendiente' ? Number(p.total) : 0), 0);
+      document.getElementById('metric-pedidos-value').textContent     = pedidos.length;
+      document.getElementById('metric-pedidos-detail').textContent    = `$${totalVentas.toLocaleString('es-CR', { minimumFractionDigits: 2 })} en ventas (Proc/Entr)`;
 
       // --- Saludo dinámico con hora ---
       const hora = new Date().getHours();
