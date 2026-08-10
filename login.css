@@ -566,3 +566,53 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* ==========================================================================
+   Dirección visual: editorial minimalista / estudio oscuro
+   ========================================================================== */
+:root {
+  --bg-dark: #f4f0e8;
+  --bg-surface: #fffdf8;
+  --bg-surface-hover: #f0ebe2;
+  --border-color: #d8d0c3;
+  --border-focus: #a57147;
+  --primary: #24231f;
+  --primary-hover: #a57147;
+  --primary-glow: rgba(165, 113, 71, 0.15);
+  --text-primary: #24221f;
+  --text-secondary: #777168;
+  --text-muted: #999187;
+  --error: #a84036;
+  --error-bg: #f4dfdc;
+  --error-border: #deb9b3;
+}
+
+body { background: var(--bg-dark); color: var(--text-primary); }
+.brand-panel { background: #24231f; border-right: 0; padding: clamp(2.5rem, 6vw, 5.5rem); }
+.brand-overlay { background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 48%), radial-gradient(circle at 88% 14%, rgba(200, 167, 124, 0.32), transparent 25%); }
+.location-badge { border-radius: 0; color: #d9d1c5; background: transparent; border-color: rgba(255,255,255,0.22); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.badge-icon, .logo-icon { color: #c8a77c; }
+.logo-text { background: none; -webkit-text-fill-color: #fffdf8; letter-spacing: 0.12em; font-size: 1.1rem; }
+.hero-text h1 { font-size: clamp(3.4rem, 5.5vw, 6.5rem); line-height: 0.9; letter-spacing: -0.075em; background: none; -webkit-text-fill-color: #fffdf8; max-width: 10ch; }
+.hero-text p { color: #c6bfb4; max-width: 34rem; }
+.brand-footer { color: #9e968a; }
+.glow-sphere { filter: blur(120px); opacity: 0.12; }
+.glow-1, .glow-2 { background: #c8a77c; }
+.form-panel { background: #f4f0e8; padding: clamp(2rem, 6vw, 6rem); justify-content: center; }
+.form-container > * { max-width: 430px; }
+.form-header h2 { font-size: clamp(2.5rem, 4vw, 4rem); line-height: 0.95; letter-spacing: -0.065em; }
+.form-header p { max-width: 28rem; }
+.input-group label { color: #4b4741; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; }
+.input-wrapper input, .input-wrapper select { background: #fffdf8; color: #24221f; border-color: #cfc6b8; border-radius: 0; padding-top: 0.95rem; padding-bottom: 0.95rem; }
+.input-wrapper select option { background: #fffdf8; color: #24221f; }
+.input-wrapper input:focus, .input-wrapper select:focus { background: #fffdf8; border-color: #a57147; box-shadow: 0 0 0 2px rgba(165,113,71,.18); }
+.input-icon { color: #8d8479; }
+.input-wrapper input:focus ~ .input-icon, .input-wrapper select:focus ~ .input-icon { color: #a57147; }
+.submit-btn { background: #24231f; color: #fffdf8; border-radius: 0; box-shadow: none; text-transform: uppercase; letter-spacing: 0.09em; font-size: 0.8rem; }
+.submit-btn:hover { background: #a57147; box-shadow: none; transform: none; }
+.text-link, .forgot-link { color: #765637; }
+.checkmark { background: #fffdf8; border-color: #bdb4a7; border-radius: 0; }
+.checkbox-container input:checked ~ .checkmark { background: #24231f; border-color: #24231f; }
+.checkbox-container .checkmark:after { border-color: #fffdf8; }
+.alert-box { border-radius: 0; }
+@media (max-width: 1024px) { .form-panel { min-height: 100vh; } }
