@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 /* ==========================================================================
    CSS de Autenticación - Empresa de Tecnología (CR-Tech)
    Diseño Premium, Moderno y Responsive
@@ -5,27 +7,27 @@
 
 /* Variables del Sistema de Diseño */
 :root {
-    --bg-dark: #0b0f19;
-    --bg-surface: #131b2e;
-    --bg-surface-hover: #1b253f;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --border-focus: #00e5ff;
+    --bg-dark: #1A1A1A;
+    --bg-surface: #F7F4EE;
+    --bg-surface-hover: #EEE8DE;
+    --border-color: rgba(26, 26, 26, 0.08);
+    --border-focus: #1A1A1A;
     
-    --primary: #00d2ff;
-    --primary-hover: #00aacc;
-    --primary-glow: rgba(0, 210, 255, 0.15);
+    --primary: #1A1A1A;
+    --primary-hover: #0F0F0F;
+    --primary-glow: rgba(26, 26, 26, 0.12);
     
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-primary: #1F1F1E;
+    --text-secondary: #5F5D59;
+    --text-muted: #7A756D;
     
-    --error: #ff4a5a;
-    --error-bg: rgba(255, 74, 90, 0.08);
-    --error-border: rgba(255, 74, 90, 0.2);
+    --error: #9D2E2E;
+    --error-bg: rgba(157, 46, 46, 0.08);
+    --error-border: rgba(157, 46, 46, 0.2);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-display: 'Outfit', sans-serif;
+    --font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
 
 /* Reset Base */
@@ -37,7 +39,7 @@
 
 body {
     font-family: var(--font-sans);
-    background-color: var(--bg-dark);
+    background: linear-gradient(135deg, #f5f0e7 0%, #EAE8E3 100%);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -534,6 +536,103 @@ body {
 
 .submit-btn:hover .btn-icon {
     transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Reestilización Premium
+   ========================================================================== */
+.brand-panel {
+    background: linear-gradient(135deg, #161616 0%, #222220 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 3.5rem;
+}
+
+.brand-logo {
+    margin-bottom: 2rem;
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+}
+
+.hero-text h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    color: #ffffff;
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+}
+
+.hero-text p {
+    color: rgba(255,255,255,0.72);
+    max-width: 32rem;
+}
+
+.form-panel {
+    background: transparent;
+    padding: 3rem 2.5rem;
+}
+
+.form-container {
+    padding: 0;
+}
+
+.form-header h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+}
+
+.form-header p {
+    color: var(--text-secondary);
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    background: #f8f4eb;
+    border: 1px solid var(--border-color);
+    border-radius: 0.35rem;
+    padding: 0.86rem 1rem 0.86rem 2.75rem;
+    color: var(--text-primary);
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+    border-color: rgba(26, 26, 26, 0.2);
+    box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.08);
+}
+
+.submit-btn {
+    background: var(--primary);
+    color: #ffffff;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    font-weight: 700;
+}
+
+.submit-btn:hover {
+    transform: none;
+    box-shadow: none;
+    filter: brightness(1.03);
+}
+
+.text-link {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.alert-box {
+    border-radius: 0.5rem;
 }
 
 /* ==========================================================================
