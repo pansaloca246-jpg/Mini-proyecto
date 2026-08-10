@@ -41,7 +41,7 @@ function renderClients() {
         <td>${cli.categoria}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--secondary btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">✎</button>
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">✎</button>
             <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="Eliminar ${cli.nombre}">🗑</button>
           </div>
         </td>
@@ -105,6 +105,12 @@ function closeModal() {
 
 function saveClient(event) {
   event.preventDefault();
+
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   resetErrors();
 
   if (!form.checkValidity()) {
@@ -142,6 +148,11 @@ function saveClient(event) {
 }
 
 async function handleTableActions(event) {
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   const button = event.target.closest('button[data-action]');
   if (!button) return;
 
@@ -194,7 +205,13 @@ form.querySelectorAll('input, select').forEach((input) => {
 });
 
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
-  button.addEventListener('click', () => openModal());
+  button.addEventListener('click', () => {
+    if (window.currentUserRole !== 'admin') {
+      alert("No tienes permisos para modificar datos");
+      return;
+    }
+    openModal();
+  });
 });
 
 document.querySelectorAll('[data-close-modal]').forEach((button) => {

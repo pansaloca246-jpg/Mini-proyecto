@@ -116,6 +116,12 @@ function closeModal() {
 
 function saveProduct(event) {
   event.preventDefault();
+  
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   resetErrors();
 
   if (!form.checkValidity()) {
@@ -155,6 +161,11 @@ function saveProduct(event) {
 }
 
 async function handleTableActions(event) {
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return; // Bloqueo de seguridad
+  }
+
   const button = event.target.closest('button[data-action]');
   if (!button) return;
 
@@ -211,7 +222,13 @@ form.querySelectorAll('input, select, textarea').forEach((input) => {
 });
 
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
-  button.addEventListener('click', () => openModal());
+  button.addEventListener('click', () => {
+    if (window.currentUserRole !== 'admin') {
+      alert("No tienes permisos para modificar datos");
+      return;
+    }
+    openModal();
+  });
 });
 
 document.querySelectorAll('[data-close-modal]').forEach((button) => {

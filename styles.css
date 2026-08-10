@@ -598,6 +598,21 @@ ul {
   .topbar__menu-btn {
     display: inline-flex;
   }
+}
+
+/* ==========================================================================
+   Restricciones de Rol (Vendedor / Usuario)
+   ========================================================================== */
+.solo-vendedor [data-action="edit"],
+.solo-vendedor [data-action="delete"],
+.solo-vendedor [data-open-modal] {
+  display: none !important;
+}
+
+.disabled-by-role {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
   .content {
     padding: var(--space-6);

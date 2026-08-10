@@ -116,11 +116,16 @@
 
           <!-- Sección de Tareas Pendientes (Dinámica) -->
           <section class="tasks-section" aria-labelledby="tasks-title">
-            <h3 class="tasks-section__title" id="tasks-title">
-              <span class="tasks-section__icon">📋</span>
-              Tareas pendientes de hoy
-              <span class="badge badge--info tasks-badge" id="tasks-pending-count">Cargando...</span>
-            </h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 class="tasks-section__title" id="tasks-title" style="margin-bottom: 0;">
+                <span class="tasks-section__icon">📋</span>
+                Tareas pendientes de hoy
+                <span class="badge badge--info tasks-badge" id="tasks-pending-count">Cargando...</span>
+              </h3>
+              <button class="btn btn--primary" data-open-modal="taskModal">
+                <span>+ Nueva Tarea</span>
+              </button>
+            </div>
             <ul class="tasks-list" id="tasks-list">
               <!-- Las tareas se generan dinámicamente desde JS -->
             </ul>
@@ -129,6 +134,53 @@
       </div>
     </div>
 
+    <!-- Modal de Tarea -->
+    <div class="modal" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modal-title-task" hidden>
+      <div class="modal__backdrop" data-close-modal="taskModal"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modal-title-task">Nueva Tarea</h2>
+          <button class="btn btn--ghost btn--icon" aria-label="Cerrar modal" data-close-modal="taskModal">✕</button>
+        </div>
+        <form id="task-form" class="form" novalidate>
+          <input type="hidden" id="task-id">
+          
+          <div class="form__group">
+            <label class="form__label" for="task-title">Título <span class="text-danger">*</span></label>
+            <input class="input" type="text" id="task-title" required placeholder="Ej. Llamar al proveedor">
+            <div class="form__error" id="error-task-title"></div>
+          </div>
+          
+          <div class="form__group">
+            <label class="form__label" for="task-desc">Descripción</label>
+            <textarea class="input" id="task-desc" rows="3" placeholder="Detalles de la tarea..."></textarea>
+          </div>
+          
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="task-priority">Prioridad <span class="text-danger">*</span></label>
+              <select class="select" id="task-priority" required>
+                <option value="high">Alta</option>
+                <option value="medium" selected>Media</option>
+                <option value="low">Baja</option>
+              </select>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="task-deadline">Plazo (ej. Hoy, Urgente) <span class="text-danger">*</span></label>
+              <input class="input" type="text" id="task-deadline" required placeholder="Ej. Urgente">
+            </div>
+          </div>
+          
+          <div class="modal__actions">
+            <button class="btn btn--secondary" type="button" data-close-modal="taskModal">Cancelar</button>
+            <button class="btn btn--primary" type="submit">Guardar Tarea</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="auth.js"></script>
     <script>
       // ═══════════════════════════════════════════════════════════════════
       //  Dashboard Dinámico — Lee datos reales de LocalStorage
@@ -154,17 +206,19 @@
       }
 
       // --- Actualizar Usuario Logueado ---
-      const sessionData = leerLS('adminCredentials', { username: 'Samu' });
-      const currentUserName = sessionData.username.split('@')[0]; // Usa la primera parte si es correo
-      
-      const topbarUserSpan = document.querySelector('.topbar__user span:last-child');
-      if (topbarUserSpan) {
-          topbarUserSpan.textContent = `${currentUserName} · Admin`;
-      }
+      const sessionData = leerLS('adminCredentials', { username: 'Samu', role: 'admin' });
+      const currentUserName = sessionData.username.split('@')[0];
+      const roleLabel = sessionData.role === 'admin' ? 'Administrador' : 'Vendedor';
       
       const pageTitle = document.getElementById('page-title');
       if (pageTitle) {
           pageTitle.textContent = `¡Bienvenido de nuevo, ${currentUserName}!`;
+      }
+      
+      const greetingSub = document.getElementById('greeting-sub');
+      if (greetingSub && sessionData.role === 'user') {
+          // Si luego la hora sobreescribe, no importa, es sólo un ejemplo visual
+          greetingSub.textContent = 'Acceso de Vendedor: Permisos limitados a productos, clientes y pedidos.';
       }
 
       // --- Leer datos del sistema ---
@@ -192,12 +246,23 @@
       // --- Saludo dinámico con hora ---
       const hora = new Date().getHours();
       const saludo = hora < 12 ? 'Buenos días' : hora < 18 ? 'Buenas tardes' : 'Buenas noches';
-      document.getElementById('greeting-sub').textContent =
-        `${saludo}, esperamos que tengas un excelente día. Son las ${new Date().toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit' })}.`;
+      if (sessionData.role !== 'user') {
+        document.getElementById('greeting-sub').textContent =
+          `${saludo}, esperamos que tengas un excelente día. Son las ${new Date().toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit' })}.`;
+      } else {
+        document.getElementById('greeting-sub').textContent =
+          `Vista de Vendedor. ${saludo}, son las ${new Date().toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit' })}.`;
+      }
 
       // --- Generación dinámica de tareas ---
       const TASKS_DONE_KEY = 'dashboard_tasks_done';
+      const TASKS_CRUD_KEY = 'tareas_crud';
       let tasksDone = leerLS(TASKS_DONE_KEY, []);
+
+      // Generador de ID único
+      function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+      }
 
       function buildTasks() {
         const tasks = [];
@@ -285,27 +350,55 @@
           });
         }
 
+        // Si no existen tareas en localStorage, creamos unas iniciales basadas en el estado del sistema
+        if (!localStorage.getItem(TASKS_CRUD_KEY)) {
+          guardarLS(TASKS_CRUD_KEY, tasks);
+        }
+
         return tasks;
       }
 
+      function getTasks() {
+        const storedTasks = localStorage.getItem(TASKS_CRUD_KEY);
+        if (storedTasks) {
+          return JSON.parse(storedTasks);
+        } else {
+          return buildTasks(); // Genera y guarda las iniciales
+        }
+      }
+
       function renderTasks() {
-        const tasks = buildTasks();
+        const tasks = getTasks();
         const tasksList = document.getElementById('tasks-list');
         const pendingCount = document.getElementById('tasks-pending-count');
 
+        if (tasks.length === 0) {
+          tasksList.innerHTML = `<li style="text-align: center; color: var(--text-muted); padding: 1rem;">No hay tareas pendientes.</li>`;
+          updatePendingBadge(tasks);
+          return;
+        }
+
         tasksList.innerHTML = tasks.map(task => {
           const isDone = tasksDone.includes(task.id);
+          const iconObj = { 'high': '🔴', 'medium': '🟡', 'low': '🟢' };
+          const displayIcon = task.icon || iconObj[task.priority] || '📋';
+          const linkHtml = task.link ? `<a href="${task.link}" class="task-link">${task.title}</a>` : task.title;
+
           return `
             <li class="task-item task-item--${task.priority}${isDone ? ' task-item--done' : ''}" data-task-id="${task.id}">
-              <div class="task-item__icon task-item__icon--${task.priority}" aria-hidden="true">${task.icon}</div>
+              <div class="task-item__icon task-item__icon--${task.priority}" aria-hidden="true">${displayIcon}</div>
               <div class="task-item__body">
                 <p class="task-item__title">
-                  <a href="${task.link}" class="task-link">${task.title}</a>
+                  ${linkHtml}
                 </p>
-                <p class="task-item__desc">${task.desc}</p>
+                <p class="task-item__desc">${task.desc || ''}</p>
               </div>
               <div class="task-item__meta">
                 <span class="task-item__deadline${task.deadlineUrgent ? ' task-item__deadline--urgent' : ''}">${task.deadline}</span>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                  <button class="btn btn--ghost btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="edit" data-id="${task.id}" aria-label="Editar tarea">✎</button>
+                  <button class="btn btn--danger btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="delete" data-id="${task.id}" aria-label="Eliminar tarea">🗑</button>
+                </div>
               </div>
               <label class="task-item__check" aria-label="Marcar como completada">
                 <input type="checkbox" class="task-checkbox" data-task-id="${task.id}" ${isDone ? 'checked' : ''}>
@@ -315,11 +408,13 @@
         }).join('');
 
         updatePendingBadge(tasks);
+        if (window.aplicarPermisosRol) window.aplicarPermisosRol();
       }
 
       function updatePendingBadge(tasks) {
         const pendingCount = document.getElementById('tasks-pending-count');
-        const remaining = (tasks || buildTasks()).filter(t => !tasksDone.includes(t.id)).length;
+        const tasksList = tasks || getTasks();
+        const remaining = tasksList.filter(t => !tasksDone.includes(t.id)).length;
         if (remaining === 0) {
           pendingCount.textContent = '¡Todo listo! ✅';
           pendingCount.className = 'badge badge--success tasks-badge';
@@ -331,21 +426,136 @@
 
       // Evento de checkbox — persistente
       document.getElementById('tasks-list').addEventListener('change', (e) => {
-        if (!e.target.classList.contains('task-checkbox')) return;
+          if (e.target.classList.contains('task-checkbox')) {
+            const taskId = e.target.dataset.taskId;
+            if (e.target.checked) {
+              if (!tasksDone.includes(taskId)) tasksDone.push(taskId);
+            } else {
+              tasksDone = tasksDone.filter(id => id !== taskId);
+            }
+            guardarLS(TASKS_DONE_KEY, tasksDone);
+            renderTasks();
+          }
+        });
 
-        const taskId = e.target.dataset.taskId;
-        const item = e.target.closest('.task-item');
+      // --- Modal y CRUD Tareas ---
+      const taskModal = document.getElementById('taskModal');
+      const taskForm = document.getElementById('task-form');
+      const taskTitleInput = document.getElementById('task-title');
+      const taskDescInput = document.getElementById('task-desc');
+      const taskPriorityInput = document.getElementById('task-priority');
+      const taskDeadlineInput = document.getElementById('task-deadline');
+      const taskIdInput = document.getElementById('task-id');
+      const errorTaskTitle = document.getElementById('error-task-title');
 
-        if (e.target.checked) {
-          tasksDone.push(taskId);
-          item.classList.add('task-item--done');
-        } else {
-          tasksDone = tasksDone.filter(id => id !== taskId);
-          item.classList.remove('task-item--done');
+      function openModal() {
+        taskModal.hidden = false;
+        taskTitleInput.focus();
+      }
+
+      function closeModal() {
+        taskModal.hidden = true;
+        taskForm.reset();
+        taskIdInput.value = '';
+        errorTaskTitle.textContent = '';
+        taskTitleInput.classList.remove('input--error');
+      }
+
+      function saveTask(e) {
+        e.preventDefault();
+        
+        if (window.currentUserRole !== 'admin') {
+          alert("No tienes permisos para modificar datos");
+          return;
         }
 
-        guardarLS(TASKS_DONE_KEY, tasksDone);
-        updatePendingBadge();
+        errorTaskTitle.textContent = '';
+        taskTitleInput.classList.remove('input--error');
+
+        if (!taskTitleInput.value.trim()) {
+          errorTaskTitle.textContent = 'El título es obligatorio.';
+          taskTitleInput.classList.add('input--error');
+          return;
+        }
+
+        const tasks = getTasks();
+        const editingId = taskIdInput.value;
+        const taskData = {
+          title: taskTitleInput.value.trim(),
+          desc: taskDescInput.value.trim(),
+          priority: taskPriorityInput.value,
+          deadline: taskDeadlineInput.value.trim(),
+          deadlineUrgent: taskDeadlineInput.value.toLowerCase().includes('urgente')
+        };
+
+        if (editingId) {
+          const index = tasks.findIndex(t => t.id === editingId);
+          if (index !== -1) {
+            tasks[index] = { ...tasks[index], ...taskData };
+          }
+        } else {
+          taskData.id = generateId();
+          tasks.push(taskData);
+        }
+
+        guardarLS(TASKS_CRUD_KEY, tasks);
+        closeModal();
+        renderTasks();
+      }
+
+      document.querySelectorAll('[data-open-modal="taskModal"]').forEach(b => {
+        b.addEventListener('click', () => {
+          if (window.currentUserRole !== 'admin') {
+            alert("No tienes permisos para modificar datos");
+            return;
+          }
+          openModal();
+        });
+      });
+
+      document.querySelectorAll('[data-close-modal="taskModal"]').forEach(b => {
+        b.addEventListener('click', closeModal);
+      });
+
+      taskForm.addEventListener('submit', saveTask);
+
+      // Delegar clicks en la lista (Edit/Delete)
+      document.getElementById('tasks-list').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        
+        if (window.currentUserRole !== 'admin') {
+          alert("No tienes permisos para modificar datos");
+          return;
+        }
+
+        const taskId = btn.dataset.id;
+        const tasks = getTasks();
+        
+        if (btn.dataset.action === 'edit') {
+          const task = tasks.find(t => t.id === taskId);
+          if (task) {
+            taskIdInput.value = task.id;
+            taskTitleInput.value = task.title;
+            taskDescInput.value = task.desc || '';
+            taskPriorityInput.value = task.priority;
+            taskDeadlineInput.value = task.deadline || '';
+            openModal();
+          }
+        } else if (btn.dataset.action === 'delete') {
+          if (confirm('¿Seguro que deseas eliminar esta tarea?')) {
+            const updatedTasks = tasks.filter(t => t.id !== taskId);
+            guardarLS(TASKS_CRUD_KEY, updatedTasks);
+            
+            // Limpiar también de tasksDone si existía
+            if (tasksDone.includes(taskId)) {
+              tasksDone = tasksDone.filter(id => id !== taskId);
+              guardarLS(TASKS_DONE_KEY, tasksDone);
+            }
+            
+            renderTasks();
+          }
+        }
       });
 
       // --- Render inicial ---

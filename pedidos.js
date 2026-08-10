@@ -80,6 +80,8 @@ function renderOrders() {
       </tr>
     `;
   }).join('');
+  
+  if (window.aplicarPermisosRol) window.aplicarPermisosRol();
 }
 
 // Modal and Form Logic
@@ -156,6 +158,11 @@ function closeModal() {
 function saveOrder(event) {
   event.preventDefault();
 
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   const rows = Array.from(productRowsContainer.querySelectorAll('.order-product-row'));
   if (rows.length === 0) {
     alert("Debes agregar al menos un producto.");
@@ -204,6 +211,10 @@ async function handleTableActions(event) {
   if (pedidoIndex === -1) return;
 
   if (target.dataset.action === 'delete') {
+    if (window.currentUserRole !== 'admin') {
+      alert("No tienes permisos para modificar datos");
+      return; // Bloqueo extra de seguridad
+    }
     const confirmed = await showConfirm(`¿Deseas eliminar el pedido #${prodId}?`);
     if (confirmed) {
       pedidos.splice(pedidoIndex, 1);
@@ -214,6 +225,11 @@ async function handleTableActions(event) {
   }
 
   if (target.dataset.action === 'status') {
+    if (window.currentUserRole !== 'admin') {
+      alert("No tienes permisos para modificar datos");
+      renderOrders(); // Revert visual change
+      return;
+    }
     pedidos[pedidoIndex].estado = target.value;
     guardar(STORAGE_KEY, pedidos);
     showToast('Estado actualizado', 'success');
@@ -223,7 +239,13 @@ async function handleTableActions(event) {
 // Event listeners
 btnAddProduct.addEventListener('click', () => addProductRow());
 form.addEventListener('submit', saveOrder);
-document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', openModal));
+document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => {
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+  openModal();
+}));
 document.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeModal));
 tableBody.addEventListener('change', handleTableActions);
 tableBody.addEventListener('click', (e) => {

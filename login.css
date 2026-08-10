@@ -361,7 +361,8 @@ body {
     align-items: center;
 }
 
-.input-wrapper input {
+.input-wrapper input,
+.input-wrapper select {
     width: 100%;
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -371,6 +372,12 @@ body {
     font-size: 0.95rem;
     outline: none;
     transition: var(--transition-smooth);
+    appearance: none;
+}
+
+.input-wrapper select option {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
 }
 
 .input-wrapper input::placeholder {
@@ -378,7 +385,8 @@ body {
 }
 
 /* Efectos Focus */
-.input-wrapper input:focus {
+.input-wrapper input:focus,
+.input-wrapper select:focus {
     border-color: var(--border-focus);
     background-color: var(--bg-surface-hover);
     box-shadow: 0 0 0 4px var(--primary-glow);
@@ -395,7 +403,9 @@ body {
 }
 
 .input-wrapper input:focus + .input-icon,
-.input-wrapper input:focus ~ .input-icon {
+.input-wrapper input:focus ~ .input-icon,
+.input-wrapper select:focus + .input-icon,
+.input-wrapper select:focus ~ .input-icon {
     color: var(--primary);
 }
 
