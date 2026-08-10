@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administrativo - Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <a href="index.html" aria-label="Ir al inicio del dashboard">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40EKbFuhqbVontdTw2y-sOMCA9J7Jf5uhTNJw0AbHww&s" alt="Logo" class="sidebar__logo" />
+            <div>
+              <h1>CRTECH</h1>
+              <p>Panel Admin</p>
+            </div>
+          </a>
+        </div>
+
+        <nav class="sidebar__nav" aria-label="Navegación principal">
+          <a class="sidebar__link sidebar__link--active" href="index.html">
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            <span>Inicio</span>
+          </a>
+          <a class="sidebar__link" href="productos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
+            <span>Productos</span>
+          </a>
+          <a class="sidebar__link" href="clientes.html">
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
+            <span>Clientes</span>
+          </a>
+          <a class="sidebar__link" href="proveedores.html">
+            <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
+            <span>Proveedores</span>
+          </a>
+          <a class="sidebar__link" href="pedidos.html">
+            <span class="material-symbols-outlined" aria-hidden="true">list_alt</span>
+            <span>Pedidos</span>
+          </a>
+          <a class="sidebar__link" href="resumen.html">
+            <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
+            <span>Resumen</span>
+          </a>
+          <a class="sidebar__link" href="login.html">
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+            <span>Cerrar sesión</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="main-content">
+        <header class="topbar">
+          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="topbar__user">
+            <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+            <span>Samu · Integrante 2</span>
+          </div>
+        </header>
+
+        <main class="content">
+          <section class="page-header" aria-labelledby="page-title">
+            <div>
+              <p class="eyebrow">Panel administrativo</p>
+              <h2 id="page-title">¡Bienvenido de nuevo, Samu!</h2>
+              <p class="greeting-sub" id="greeting-sub">Esperamos que tengas un excelente día.</p>
+            </div>
+          </section>
+
+          <!-- Métricas en Vivo -->
+          <section class="metrics-grid" aria-label="Métricas del sistema">
+            <div class="metric-card" id="metric-productos">
+              <p class="metric-card__label">Productos</p>
+              <p class="metric-card__value" id="metric-productos-value">0</p>
+              <p class="metric-card__detail">registrados en el inventario</p>
+            </div>
+            <div class="metric-card" id="metric-clientes">
+              <p class="metric-card__label">Clientes</p>
+              <p class="metric-card__value" id="metric-clientes-value">0</p>
+              <p class="metric-card__detail">registrados en el sistema</p>
+            </div>
+            <div class="metric-card" id="metric-proveedores">
+              <p class="metric-card__label">Proveedores</p>
+              <p class="metric-card__value" id="metric-proveedores-value">0</p>
+              <p class="metric-card__detail">activos en el sistema</p>
+            </div>
+            <div class="metric-card" id="metric-pedidos">
+              <p class="metric-card__label">Pedidos</p>
+              <p class="metric-card__value" id="metric-pedidos-value">0</p>
+              <p class="metric-card__detail" id="metric-pedidos-detail">$0.00 en ventas</p>
+            </div>
+            <div class="metric-card" id="metric-alertas">
+              <p class="metric-card__label">Alertas de Stock</p>
+              <p class="metric-card__value" id="metric-alertas-value">0</p>
+              <p class="metric-card__detail">productos con stock bajo (&le; 5)</p>
+            </div>
+          </section>
+
+          <!-- Tarjeta de Bienvenida -->
+          <section class="card" aria-labelledby="welcome-title">
+            <div class="card__header">
+              <div>
+                <p class="eyebrow">Inicio</p>
+                <h3 id="welcome-title">Bienvenida al dashboard</h3>
+              </div>
+            </div>
+            <div class="card__body" style="padding: 0 var(--space-6) var(--space-6);">
+              <p class="card__description">Aquí comienza tu panel operativo. Utiliza el menú lateral para acceder rápidamente a productos, clientes, proveedores y el resumen completo.</p>
+            </div>
+          </section>
+
+          <!-- Sección de Tareas Pendientes (Dinámica) -->
+          <section class="tasks-section" aria-labelledby="tasks-title">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 class="tasks-section__title" id="tasks-title" style="margin-bottom: 0;">
+                <span class="material-symbols-outlined tasks-section__icon">checklist</span>
+                Tareas pendientes de hoy
+                <span class="badge badge--info tasks-badge" id="tasks-pending-count">Cargando...</span>
+              </h3>
+              <button class="btn btn--primary" data-open-modal="taskModal">
+                <span class="material-symbols-outlined">add</span>
+                <span>Nueva Tarea</span>
+              </button>
+            </div>
+            <ul class="tasks-list" id="tasks-list">
+              <!-- Las tareas se generan dinámicamente desde JS -->
+            </ul>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal de Tarea -->
+    <div class="modal" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modal-title-task" hidden>
+      <div class="modal__backdrop" data-close-modal="taskModal"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modal-title-task">Nueva Tarea</h2>
+          <button class="btn btn--ghost btn--icon" aria-label="Cerrar modal" data-close-modal="taskModal">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="task-form" class="form" novalidate>
+          <input type="hidden" id="task-id">
+          
+          <div class="form__group">
+            <label class="form__label" for="task-title">Título <span class="text-danger">*</span></label>
+            <input class="input" type="text" id="task-title" required placeholder="Ej. Llamar al proveedor">
+            <div class="form__error" id="error-task-title"></div>
+          </div>
+          
+          <div class="form__group">
+            <label class="form__label" for="task-desc">Descripción</label>
+            <textarea class="input" id="task-desc" rows="3" placeholder="Detalles de la tarea..."></textarea>
+          </div>
+          
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="task-priority">Prioridad <span class="text-danger">*</span></label>
+              <select class="select" id="task-priority" required>
+                <option value="high">Alta</option>
+                <option value="medium" selected>Media</option>
+                <option value="low">Baja</option>
+              </select>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="task-deadline">Plazo (ej. Hoy, Urgente) <span class="text-danger">*</span></label>
+              <input class="input" type="text" id="task-deadline" required placeholder="Ej. Urgente">
+            </div>
+          </div>
+          
+          <div class="modal__actions">
+            <button class="btn btn--secondary" type="button" data-close-modal="taskModal">Cancelar</button>
+            <button class="btn btn--primary" type="submit">Guardar Tarea</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="auth.js"></script>
+    <script>
+      // ═══════════════════════════════════════════════════════════════════
+      //  Dashboard Dinámico — Lee datos reales de LocalStorage
+      // ═══════════════════════════════════════════════════════════════════
+
+      // --- Sidebar toggle (mobile) ---
+      const menuButton = document.getElementById('menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      menuButton?.addEventListener('click', () => sidebar?.classList.toggle('is-open'));
+      sidebar?.querySelectorAll('.sidebar__link').forEach((link) => {
+        link.addEventListener('click', () => sidebar.classList.remove('is-open'));
+      });
+
+      // --- Helpers para leer LocalStorage ---
+      function leerLS(clave, defecto = []) {
+        try {
+          const raw = localStorage.getItem(clave);
+          return raw ? JSON.parse(raw) : defecto;
+        } catch { return defecto; }
+      }
+      function guardarLS(clave, valor) {
+        localStorage.setItem(clave, JSON.stringify(valor));
+      }
+
+      // --- Actualizar Usuario Logueado ---
+      const sessionData = leerLS('adminCredentials', { username: 'Samu', role: 'admin' });
+      const currentUserName = sessionData.username.split('@')[0];
+      const roleLabel = sessionData.role === 'admin' ? 'Administrador' : 'Vendedor';
+      
+      const pageTitle = document.getElementById('page-title');
+      if (pageTitle) {
+          pageTitle.textContent = `¡Bienvenido de nuevo, ${currentUserName}!`;
+      }
+      
+      const greetingSub = document.getElementById('greeting-sub');
+      if (greetingSub && sessionData.role === 'user') {
+          // Si luego la hora sobreescribe, no importa, es sólo un ejemplo visual
+          greetingSub.textContent = 'Acceso de Vendedor: Permisos limitados a productos, clientes y pedidos.';
+      }
+
+      // --- Leer datos del sistema ---
+      const productos   = leerLS('productos', []);
+      const clientes    = leerLS('clientes', []);
+      const proveedores = leerLS('proveedores', []);
+      const pedidos     = leerLS('pedidos', []);
+
+      // Análisis de datos reales
+      const lowStockThreshold = 5;
+      const lowStockProducts  = productos.filter(p => Number(p.stock) <= lowStockThreshold);
+      const categories        = [...new Set(productos.map(p => p.category).filter(Boolean))];
+      const totalValue        = productos.reduce((sum, p) => sum + (Number(p.price) * Number(p.stock)), 0);
+
+      // --- Métricas en Vivo ---
+      document.getElementById('metric-productos-value').textContent   = productos.length;
+      document.getElementById('metric-clientes-value').textContent    = clientes.length;
+      document.getElementById('metric-proveedores-value').textContent = proveedores.length;
+      document.getElementById('metric-alertas-value').textContent     = lowStockProducts.length;
+      
+      const totalVentas = pedidos.reduce((sum, p) => sum + (p.estado !== 'Pendiente' ? Number(p.total) : 0), 0);
+      document.getElementById('metric-pedidos-value').textContent     = pedidos.length;
+      document.getElementById('metric-pedidos-detail').textContent    = `$${totalVentas.toLocaleString('es-CR', { minimumFractionDigits: 2 })} en ventas (Proc/Entr)`;
+
+      // --- Saludo dinámico con hora ---
+      const hora = new Date().getHours();
+      const saludo = hora < 12 ? 'Buenos días' : hora < 18 ? 'Buenas tardes' : 'Buenas noches';
+      if (sessionData.role !== 'user') {
+        document.getElementById('greeting-sub').textContent =
+          `${saludo}, esperamos que tengas un excelente día. Son las ${new Date().toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit' })}.`;
+      } else {
+        document.getElementById('greeting-sub').textContent =
+          `Vista de Vendedor. ${saludo}, son las ${new Date().toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit' })}.`;
+      }
+
+      // --- Generación dinámica de tareas ---
+      const TASKS_DONE_KEY = 'dashboard_tasks_done';
+      const TASKS_CRUD_KEY = 'tareas_crud';
+      let tasksDone = leerLS(TASKS_DONE_KEY, []);
+
+      // Generador de ID único
+      function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+      }
+
+      function buildTasks() {
+        const tasks = [];
+
+        // Tarea 1: Stock bajo (si hay productos con stock ≤ 5)
+        if (lowStockProducts.length > 0) {
+          const names = lowStockProducts.slice(0, 3).map(p => p.name).join(', ');
+          tasks.push({
+            id: 'low-stock',
+            icon: 'production_quantity_limits',
+            priority: 'high',
+            title: `Revisar stock bajo (${lowStockProducts.length} producto${lowStockProducts.length > 1 ? 's' : ''})`,
+            desc: `Productos con ≤ ${lowStockThreshold} unidades: ${names}${lowStockProducts.length > 3 ? '…' : ''}.`,
+            deadline: 'Urgente',
+            deadlineUrgent: true,
+            link: 'productos.html',
+          });
+        }
+
+        // Tarea 2: No hay productos registrados
+        if (productos.length === 0) {
+          tasks.push({
+            id: 'no-products',
+            icon: 'inventory_2',
+            priority: 'high',
+            title: 'Registrar el primer producto',
+            desc: 'No hay productos en el inventario. Crea el primero para comenzar a operar.',
+            deadline: 'Ahora',
+            deadlineUrgent: true,
+            link: 'productos.html',
+          });
+        }
+
+        // Tarea 3: No hay clientes registrados
+        if (clientes.length === 0) {
+          tasks.push({
+            id: 'no-clients',
+            icon: 'group',
+            priority: 'medium',
+            title: 'Registrar un cliente',
+            desc: 'No hay clientes en el sistema. Agrega al menos uno para llevar el control.',
+            deadline: 'Hoy',
+            deadlineUrgent: false,
+            link: 'clientes.html',
+          });
+        }
+
+        // Tarea 4: No hay proveedores registrados
+        if (proveedores.length === 0) {
+          tasks.push({
+            id: 'no-providers',
+            icon: 'local_shipping',
+            priority: 'medium',
+            title: 'Registrar un proveedor',
+            desc: 'No hay proveedores en el sistema. Agrega al menos uno para asegurar abastecimiento.',
+            deadline: 'Hoy',
+            deadlineUrgent: false,
+            link: 'proveedores.html',
+          });
+        }
+
+        // Tarea 5: Revisar resumen operativo
+        tasks.push({
+          id: 'check-summary',
+          icon: 'bar_chart',
+          priority: 'low',
+          title: 'Revisar el resumen operativo',
+          desc: `El sistema tiene ${productos.length} productos, ${clientes.length} clientes y ${proveedores.length} proveedores.`,
+          deadline: 'Cuando puedas',
+          deadlineUrgent: false,
+          link: 'resumen.html',
+        });
+
+        // Tarea 6: Revisar valor del inventario (si hay productos)
+        if (productos.length > 0) {
+          tasks.push({
+            id: 'inventory-value',
+            icon: 'payments',
+            priority: 'low',
+            title: 'Verificar valor total del inventario',
+            desc: `El valor estimado del inventario es $${totalValue.toLocaleString('es-CR', { minimumFractionDigits: 2 })}. Verifica que esté correcto.`,
+            deadline: 'Esta semana',
+            deadlineUrgent: false,
+            link: 'productos.html',
+          });
+        }
+
+        // Si no existen tareas en localStorage, creamos unas iniciales basadas en el estado del sistema
+        if (!localStorage.getItem(TASKS_CRUD_KEY)) {
+          guardarLS(TASKS_CRUD_KEY, tasks);
+        }
+
+        return tasks;
+      }
+
+      function getTasks() {
+        const storedTasks = localStorage.getItem(TASKS_CRUD_KEY);
+        if (storedTasks) {
+          return JSON.parse(storedTasks);
+        } else {
+          return buildTasks(); // Genera y guarda las iniciales
+        }
+      }
+
+      function renderTasks() {
+        const tasks = getTasks();
+        const tasksList = document.getElementById('tasks-list');
+        const pendingCount = document.getElementById('tasks-pending-count');
+
+        if (tasks.length === 0) {
+          tasksList.innerHTML = `<li style="text-align: center; color: var(--text-muted); padding: 1rem;">No hay tareas pendientes.</li>`;
+          updatePendingBadge(tasks);
+          return;
+        }
+
+        tasksList.innerHTML = tasks.map(task => {
+          const isDone = tasksDone.includes(task.id);
+          const iconObj = { 'high': 'flag', 'medium': 'flag', 'low': 'flag' };
+          const displayIcon = task.icon || iconObj[task.priority] || 'checklist';
+          const linkHtml = task.link ? `<a href="${task.link}" class="task-link">${task.title}</a>` : task.title;
+
+          // Añadir color de flag según la prioridad
+          let iconColorStyle = '';
+          if (!task.icon) { // Si es custom y usa flag
+            if (task.priority === 'high') iconColorStyle = 'color: var(--danger-color);';
+            else if (task.priority === 'medium') iconColorStyle = 'color: var(--warning-color);';
+            else if (task.priority === 'low') iconColorStyle = 'color: var(--success-color);';
+          }
+
+          return `
+            <li class="task-item task-item--${task.priority}${isDone ? ' task-item--done' : ''}" data-task-id="${task.id}">
+              <div class="task-item__icon task-item__icon--${task.priority}" aria-hidden="true">
+                <span class="material-symbols-outlined" style="${iconColorStyle}">${displayIcon}</span>
+              </div>
+              <div class="task-item__body">
+                <p class="task-item__title">
+                  ${linkHtml}
+                </p>
+                <p class="task-item__desc">${task.desc || ''}</p>
+              </div>
+              <div class="task-item__meta">
+                <span class="task-item__deadline${task.deadlineUrgent ? ' task-item__deadline--urgent' : ''}">${task.deadline}</span>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                  <button class="btn btn--ghost btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="edit" data-id="${task.id}" aria-label="Editar tarea">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button class="btn btn--danger btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="delete" data-id="${task.id}" aria-label="Eliminar tarea">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
+                </div>
+              </div>
+              <label class="task-item__check" aria-label="Marcar como completada">
+                <input type="checkbox" class="task-checkbox" data-task-id="${task.id}" ${isDone ? 'checked' : ''}>
+                <span class="task-checkmark"></span>
+              </label>
+            </li>`;
+        }).join('');
+
+        updatePendingBadge(tasks);
+        if (window.aplicarPermisosRol) window.aplicarPermisosRol();
+      }
+
+      function updatePendingBadge(tasks) {
+        const pendingCount = document.getElementById('tasks-pending-count');
+        const tasksList = tasks || getTasks();
+        const remaining = tasksList.filter(t => !tasksDone.includes(t.id)).length;
+        if (remaining === 0) {
+          pendingCount.textContent = '¡Todo listo! ✅';
+          pendingCount.className = 'badge badge--success tasks-badge';
+        } else {
+          pendingCount.textContent = `${remaining} pendiente${remaining > 1 ? 's' : ''}`;
+          pendingCount.className = 'badge badge--info tasks-badge';
+        }
+      }
+
+      // Evento de checkbox — persistente
+      document.getElementById('tasks-list').addEventListener('change', (e) => {
+          if (e.target.classList.contains('task-checkbox')) {
+            const taskId = e.target.dataset.taskId;
+            if (e.target.checked) {
+              if (!tasksDone.includes(taskId)) tasksDone.push(taskId);
+            } else {
+              tasksDone = tasksDone.filter(id => id !== taskId);
+            }
+            guardarLS(TASKS_DONE_KEY, tasksDone);
+            renderTasks();
+          }
+        });
+
+      // --- Modal y CRUD Tareas ---
+      const taskModal = document.getElementById('taskModal');
+      const taskForm = document.getElementById('task-form');
+      const taskTitleInput = document.getElementById('task-title');
+      const taskDescInput = document.getElementById('task-desc');
+      const taskPriorityInput = document.getElementById('task-priority');
+      const taskDeadlineInput = document.getElementById('task-deadline');
+      const taskIdInput = document.getElementById('task-id');
+      const errorTaskTitle = document.getElementById('error-task-title');
+
+      function openModal() {
+        taskModal.hidden = false;
+        taskTitleInput.focus();
+      }
+
+      function closeModal() {
+        taskModal.hidden = true;
+        taskForm.reset();
+        taskIdInput.value = '';
+        errorTaskTitle.textContent = '';
+        taskTitleInput.classList.remove('input--error');
+      }
+
+      function saveTask(e) {
+        e.preventDefault();
+        
+        if (window.currentUserRole !== 'admin') {
+          alert("No tienes permisos para modificar datos");
+          return;
+        }
+
+        errorTaskTitle.textContent = '';
+        taskTitleInput.classList.remove('input--error');
+
+        if (!taskTitleInput.value.trim()) {
+          errorTaskTitle.textContent = 'El título es obligatorio.';
+          taskTitleInput.classList.add('input--error');
+          return;
+        }
+
+        const tasks = getTasks();
+        const editingId = taskIdInput.value;
+        const taskData = {
+          title: taskTitleInput.value.trim(),
+          desc: taskDescInput.value.trim(),
+          priority: taskPriorityInput.value,
+          deadline: taskDeadlineInput.value.trim(),
+          deadlineUrgent: taskDeadlineInput.value.toLowerCase().includes('urgente')
+        };
+
+        if (editingId) {
+          const index = tasks.findIndex(t => t.id === editingId);
+          if (index !== -1) {
+            tasks[index] = { ...tasks[index], ...taskData };
+          }
+        } else {
+          taskData.id = generateId();
+          tasks.push(taskData);
+        }
+
+        guardarLS(TASKS_CRUD_KEY, tasks);
+        closeModal();
+        renderTasks();
+      }
+
+      document.querySelectorAll('[data-open-modal="taskModal"]').forEach(b => {
+        b.addEventListener('click', () => {
+          if (window.currentUserRole !== 'admin') {
+            alert("No tienes permisos para modificar datos");
+            return;
+          }
+          openModal();
+        });
+      });
+
+      document.querySelectorAll('[data-close-modal="taskModal"]').forEach(b => {
+        b.addEventListener('click', closeModal);
+      });
+
+      taskForm.addEventListener('submit', saveTask);
+
+      // Delegar clicks en la lista (Edit/Delete)
+      document.getElementById('tasks-list').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        
+        if (window.currentUserRole !== 'admin') {
+          alert("No tienes permisos para modificar datos");
+          return;
+        }
+
+        const taskId = btn.dataset.id;
+        const tasks = getTasks();
+        
+        if (btn.dataset.action === 'edit') {
+          const task = tasks.find(t => t.id === taskId);
+          if (task) {
+            taskIdInput.value = task.id;
+            taskTitleInput.value = task.title;
+            taskDescInput.value = task.desc || '';
+            taskPriorityInput.value = task.priority;
+            taskDeadlineInput.value = task.deadline || '';
+            openModal();
+          }
+        } else if (btn.dataset.action === 'delete') {
+          if (confirm('¿Seguro que deseas eliminar esta tarea?')) {
+            const updatedTasks = tasks.filter(t => t.id !== taskId);
+            guardarLS(TASKS_CRUD_KEY, updatedTasks);
+            
+            // Limpiar también de tasksDone si existía
+            if (tasksDone.includes(taskId)) {
+              tasksDone = tasksDone.filter(id => id !== taskId);
+              guardarLS(TASKS_DONE_KEY, tasksDone);
+            }
+            
+            renderTasks();
+          }
+        }
+      });
+
+      // --- Render inicial ---
+      renderTasks();
+    </script>
+  </body>
+</html>

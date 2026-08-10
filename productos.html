@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Administrativo - Proveedores</title>
+    <title>Dashboard Administrativo - Productos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -15,13 +15,7 @@
       <aside class="sidebar" id="sidebar">
         <div class="sidebar__brand">
           <a href="index.html" aria-label="Ir al inicio del dashboard">
-<<<<<<< HEAD
-            <span class="sidebar__logo" aria-hidden="true">
-              <img src="logo.png" alt="" class="brand-logo-img" />
-            </span>
-=======
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40EKbFuhqbVontdTw2y-sOMCA9J7Jf5uhTNJw0AbHww&s" alt="Logo" class="sidebar__logo" />
->>>>>>> be079ea1503f453d69964fdf08cfe50b59b4f896
             <div>
               <h1>CRTECH</h1>
               <p>Panel Admin</p>
@@ -34,7 +28,7 @@
             <span class="material-symbols-outlined" aria-hidden="true">home</span>
             <span>Inicio</span>
           </a>
-          <a class="sidebar__link" href="productos.html">
+          <a class="sidebar__link sidebar__link--active" href="productos.html">
             <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
             <span>Productos</span>
           </a>
@@ -42,7 +36,7 @@
             <span class="material-symbols-outlined" aria-hidden="true">group</span>
             <span>Clientes</span>
           </a>
-          <a class="sidebar__link sidebar__link--active" href="proveedores.html">
+          <a class="sidebar__link" href="proveedores.html">
             <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
             <span>Proveedores</span>
           </a>
@@ -75,112 +69,122 @@
         <main class="content">
           <section class="page-header" aria-labelledby="page-title">
             <div>
-              <p class="eyebrow">Gestión de proveedores</p>
-              <h2 id="page-title">CRUD de proveedores</h2>
+              <p class="eyebrow">Gestión de inventario</p>
+              <h2 id="page-title">Productos</h2>
             </div>
           </section>
 
           <div class="actions-bar">
-            <form class="search-form" id="search-form" role="search" aria-label="Buscar proveedores">
+            <form class="search-form" id="search-form" role="search" aria-label="Buscar productos">
               <div class="search-input-wrapper">
                 <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
-                <input class="input" type="search" id="search-input" placeholder="Buscar proveedores por nombre o contacto..." aria-label="Término de búsqueda" />
+                <input class="input" type="search" id="search-input" placeholder="Buscar productos por nombre o código..." aria-label="Término de búsqueda" />
               </div>
             </form>
-            <button class="btn btn--primary" id="btn-add" type="button" aria-haspopup="dialog" aria-expanded="false" data-open-modal>
+            <button class="btn btn--primary" id="btn-add" type="button" aria-haspopup="dialog" aria-expanded="false" data-open-modal="modal-producto">
               <span class="material-symbols-outlined">add</span>
-              <span>Nuevo Proveedor</span>
+              <span>Nuevo Producto</span>
             </button>
           </div>
 
-          <section class="alert alert--success" aria-label="Resumen de proveedores">
+          <section class="alert alert--success" aria-label="Resumen del inventario">
             <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-            <span>Asegura un abastecimiento constante manteniendo el contacto con tus proveedores.</span>
+            <span>Mantén el catálogo actualizado con stock, precios y categorías claras.</span>
           </section>
 
-          <section class="card" aria-labelledby="proveedores-title">
+          <section class="card" aria-labelledby="products-title">
             <div class="card__header">
-              <div>
-                <h3 id="proveedores-title">Listado de proveedores</h3>
-                <p class="card__description">Aquí se muestra el listado principal para editar o eliminar proveedores.</p>
-              </div>
+              <h3 id="products-title">Listado de productos</h3>
+              <span class="badge badge--info" id="product-count">0 productos</span>
             </div>
+
             <div class="table-wrapper">
-              <table class="table" aria-label="Tabla de proveedores">
+              <table class="table" aria-describedby="products-title">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Empresa</th>
-                    <th scope="col">Contacto</th>
-                    <th scope="col">Teléfono</th>
+                    <th scope="col">Nombre</th>
                     <th scope="col">Categoría</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
                     <th scope="col">Acciones</th>
                   </tr>
                 </thead>
-                <tbody id="proveedores-table-body">
-                  <!-- Renderizado por JS -->
-                </tbody>
+                <tbody id="products-table-body"></tbody>
               </table>
             </div>
-            
-            <div class="empty-state" id="empty-state" hidden>
-              <p>No hay proveedores registrados todavía. Crea el primero para empezar.</p>
+
+            <div class="empty-state" id="empty-state">
+              <p>No hay productos registrados todavía. Crea el primero para empezar.</p>
             </div>
           </section>
         </main>
       </div>
     </div>
 
-    <!-- Modal de Proveedor -->
-    <div class="modal" id="provider-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description" hidden>
+    <div class="modal" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description" hidden>
       <div class="modal__backdrop" data-close-modal></div>
       <div class="modal__content">
         <header class="modal__header">
-          <h2 class="modal__title" id="modal-title">Registrar Nuevo Proveedor</h2>
-          <button class="btn btn--ghost btn--icon" id="btn-close-modal" aria-label="Cerrar modal" data-close-modal>
+          <h2 class="modal__title" id="modal-title">Registrar Nuevo Producto</h2>
+          <button class="btn btn--ghost btn--icon" id="btn-close-modal" aria-label="Cerrar modal" data-close-modal="modal-producto">
             <span class="material-symbols-outlined">close</span>
           </button>
         </header>
-        <p class="modal__description" id="modal-description">Completa los datos del proveedor para guardarlo en el sistema.</p>
+        <p class="modal__description" id="modal-description">Completa los datos del producto para guardarlo en el inventario.</p>
 
-        <form id="provider-form" novalidate data-mode="create">
-          <input type="hidden" id="provider-id" name="id" />
+        <form id="product-form" novalidate>
+          <input type="hidden" id="product-id" name="id" />
 
           <div class="form-grid">
             <div class="form-group">
-              <label class="label" for="provider-name">Nombre / Empresa</label>
-              <input class="input" id="provider-name" name="name" type="text" maxlength="50" required />
+              <label class="label" for="product-name">Nombre</label>
+              <input class="input" id="product-name" name="name" type="text" maxlength="80" required />
               <div class="form-error" aria-live="polite"></div>
             </div>
 
             <div class="form-group">
-              <label class="label" for="provider-contact">Contacto</label>
-              <input class="input" id="provider-contact" name="contact" type="text" maxlength="50" required />
-              <div class="form-error" aria-live="polite"></div>
-            </div>
-
-            <div class="form-group">
-              <label class="label" for="provider-phone">Teléfono</label>
-              <input class="input" id="provider-phone" name="phone" type="tel" maxlength="15" required />
-              <div class="form-error" aria-live="polite"></div>
-            </div>
-
-            <div class="form-group">
-              <label class="label" for="provider-category">Categoría</label>
-              <select class="select" id="provider-category" name="category" required>
-                <option value="">Seleccione una categoría</option>
-                <option value="Electrónica">Electrónica</option>
-                <option value="Papelería">Papelería</option>
-                <option value="Muebles">Muebles</option>
-                <option value="Servicios">Servicios</option>
+              <label class="label" for="product-category">Categoría</label>
+              <select class="select" id="product-category" name="category" required>
+                <option value="">Selecciona una categoría</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Software">Software</option>
+                <option value="Accesorios">Accesorios</option>
+                <option value="Periféricos">Periféricos</option>
               </select>
               <div class="form-error" aria-live="polite"></div>
             </div>
 
-            <div class="form-group form-group--full form-actions">
-              <button class="btn btn--primary" type="submit">Guardar</button>
-              <button class="btn btn--ghost" type="button" data-close-modal>Cancelar</button>
+            <div class="form-group">
+              <label class="label" for="product-price">Precio</label>
+              <input class="input" id="product-price" name="price" type="number" min="0" step="0.01" required />
+              <div class="form-error" aria-live="polite"></div>
             </div>
+
+            <div class="form-group">
+              <label class="label" for="product-stock">Stock</label>
+              <input class="input" id="product-stock" name="stock" type="number" min="0" required />
+              <div class="form-error" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="label" for="product-proveedor">Proveedor</label>
+              <select class="select" id="product-proveedor" name="proveedor" required>
+                <option value="">Selecciona un proveedor</option>
+              </select>
+              <div class="form-error" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="label" for="product-description">Descripción</label>
+              <textarea class="textarea" id="product-description" name="description" maxlength="220"></textarea>
+              <p class="form-help">La descripción es opcional, pero ayuda a detallar el estado del producto.</p>
+            </div>
+          </div>
+
+          <div class="modal__actions">
+            <button class="btn btn--secondary" type="button" data-close-modal>Cancelar</button>
+            <button class="btn btn--primary" type="submit">Guardar producto</button>
           </div>
         </form>
       </div>
@@ -189,6 +193,6 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="auth.js"></script>
-    <script type="module" src="proveedores.js"></script>
+    <script type="module" src="productos.js"></script>
   </body>
 </html>

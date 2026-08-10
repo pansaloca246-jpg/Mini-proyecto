@@ -148,7 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!localStorage.getItem(STORAGE_KEY)) {
         const initialCreds = {
             username: DEFAULT_USER,
-            password: DEFAULT_PASS
+            password: DEFAULT_PASS,
+            role: 'admin'
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(initialCreds));
     }
@@ -266,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('reg-name').value.trim();
         const email = document.getElementById('reg-email').value.trim();
         const pass = document.getElementById('reg-password').value.trim();
+        const role = document.getElementById('reg-role').value;
         const confirmPass = document.getElementById('reg-password-confirm').value.trim();
 
         if (!name || !email || !pass || !confirmPass) {
@@ -284,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Guardar las nuevas credenciales que sobreescriben las actuales
-        const newCreds = { username: email, password: pass };
+        const newCreds = { username: email, password: pass, role: role };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newCreds));
         
         showAlert(regAlertBox, regAlertMessage, '¡Cuenta creada exitosamente! Inicia sesión.', 'success');

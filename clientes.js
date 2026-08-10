@@ -20,15 +20,6 @@ const categoryInput = document.getElementById('client-category');
 
 let toastTimer = null;
 
-// Cliente inicial predeterminado si no hay nada guardado
-const DEFAULT_CLIENT = {
-  id: '1',
-  nombre: 'Tech Corp S.A.',
-  email: 'contacto@techcorp.com',
-  telefono: '+506 8000 1234',
-  categoria: 'Corporativo'
-};
-
 function renderClients() {
   const clientes = obtener(STORAGE_KEY, []);
 
@@ -50,8 +41,12 @@ function renderClients() {
         <td>${cli.categoria}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--secondary btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">✎</button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="Eliminar ${cli.nombre}">🗑</button>
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="Eliminar ${cli.nombre}">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
           </div>
         </td>
       </tr>
@@ -114,6 +109,12 @@ function closeModal() {
 
 function saveClient(event) {
   event.preventDefault();
+
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   resetErrors();
 
   if (!form.checkValidity()) {
@@ -151,6 +152,11 @@ function saveClient(event) {
 }
 
 async function handleTableActions(event) {
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   const button = event.target.closest('button[data-action]');
   if (!button) return;
 
@@ -166,6 +172,14 @@ async function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
+    const pedidos = obtener('pedidos', []);
+    const isInOrder = pedidos.some(pedido => pedido.clienteId === cliId);
+
+    if (isInOrder) {
+      alert(`No se puede eliminar a ${cli.nombre} porque tiene uno o más pedidos asociados.`);
+      return;
+    }
+
     const confirmed = await showConfirm(`¿Deseas eliminar a ${cli.nombre}?`);
     if (confirmed) {
       const nuevos = clientes.filter((item) => item.id !== cliId);
@@ -195,7 +209,13 @@ form.querySelectorAll('input, select').forEach((input) => {
 });
 
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
-  button.addEventListener('click', () => openModal());
+  button.addEventListener('click', () => {
+    if (window.currentUserRole !== 'admin') {
+      alert("No tienes permisos para modificar datos");
+      return;
+    }
+    openModal();
+  });
 });
 
 document.querySelectorAll('[data-close-modal]').forEach((button) => {

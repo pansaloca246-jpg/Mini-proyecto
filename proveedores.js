@@ -50,8 +50,12 @@ function renderProviders() {
         <td>${prov.categoria}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--secondary btn--icon" type="button" data-action="edit" data-id="${prov.id}" aria-label="Editar ${prov.nombre}">✎</button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${prov.id}" aria-label="Eliminar ${prov.nombre}">🗑</button>
+            <button class="btn btn--secondary btn--icon" type="button" data-action="edit" data-id="${prov.id}" aria-label="Editar ${prov.nombre}">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${prov.id}" aria-label="Eliminar ${prov.nombre}">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
           </div>
         </td>
       </tr>

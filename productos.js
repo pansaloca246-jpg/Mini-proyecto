@@ -16,6 +16,7 @@ const nameInput = document.getElementById('product-name');
 const categoryInput = document.getElementById('product-category');
 const priceInput = document.getElementById('product-price');
 const stockInput = document.getElementById('product-stock');
+const proveedorInput = document.getElementById('product-proveedor');
 const descriptionInput = document.getElementById('product-description');
 
 let toastTimer = null;
@@ -43,8 +44,12 @@ function renderProducts() {
         <td>${producto.stock}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${producto.id}" aria-label="Editar ${producto.name}">✎</button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${producto.id}" aria-label="Eliminar ${producto.name}">🗑</button>
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${producto.id}" aria-label="Editar ${producto.name}">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${producto.id}" aria-label="Eliminar ${producto.name}">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
           </div>
         </td>
       </tr>
@@ -82,12 +87,18 @@ function openModal(product = null) {
   form.dataset.mode = product ? 'edit' : 'create';
   idInput.value = product?.id ?? '';
 
+  // Populate proveedores dropdown
+  const proveedores = obtener('proveedores', []);
+  proveedorInput.innerHTML = '<option value="">Selecciona un proveedor</option>' + 
+    proveedores.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('');
+
   if (product) {
     modalTitle.textContent = 'Editar producto';
     nameInput.value = product.name;
     categoryInput.value = product.category;
     priceInput.value = product.price;
     stockInput.value = product.stock;
+    proveedorInput.value = product.proveedor || '';
     descriptionInput.value = product.description;
   } else {
     modalTitle.textContent = 'Nuevo producto';
@@ -109,6 +120,12 @@ function closeModal() {
 
 function saveProduct(event) {
   event.preventDefault();
+  
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return;
+  }
+
   resetErrors();
 
   if (!form.checkValidity()) {
@@ -127,6 +144,7 @@ function saveProduct(event) {
     category: categoryInput.value,
     price: Number(priceInput.value),
     stock: Number(stockInput.value),
+    proveedor: proveedorInput.value,
     description: descriptionInput.value.trim(),
   };
 
@@ -147,6 +165,11 @@ function saveProduct(event) {
 }
 
 async function handleTableActions(event) {
+  if (window.currentUserRole !== 'admin') {
+    alert("No tienes permisos para modificar datos");
+    return; // Bloqueo de seguridad
+  }
+
   const button = event.target.closest('button[data-action]');
   if (!button) return;
 
@@ -162,6 +185,14 @@ async function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
+    const pedidos = obtener('pedidos', []);
+    const isInOrder = pedidos.some(pedido => pedido.productos.some(p => p.productoId === prodId));
+    
+    if (isInOrder) {
+      alert(`No se puede eliminar ${prod.name} porque está asociado a uno o más pedidos.`);
+      return;
+    }
+
     const confirmed = await showConfirm(`¿Deseas eliminar ${prod.name}?`);
     if (confirmed) {
       const nuevos = productos.filter((item) => item.id !== prodId);
@@ -195,7 +226,13 @@ form.querySelectorAll('input, select, textarea').forEach((input) => {
 });
 
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
-  button.addEventListener('click', () => openModal());
+  button.addEventListener('click', () => {
+    if (window.currentUserRole !== 'admin') {
+      alert("No tienes permisos para modificar datos");
+      return;
+    }
+    openModal();
+  });
 });
 
 document.querySelectorAll('[data-close-modal]').forEach((button) => {
