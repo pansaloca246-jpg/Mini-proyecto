@@ -321,6 +321,96 @@ ul {
 }
 
 /* ==========================================================================
+   Sistema de temas: las superficies y el contraste se controlan desde html.
+   ========================================================================== */
+html[data-theme="theme-1"] {
+  --bg-primary: #fffdf8;
+  --bg-secondary: #6a4a36;
+  --text-primary: #28231f;
+  --text-secondary: #71665d;
+  --accent: #9a6a43;
+  --border-color: #d8cdbf;
+  --surface: #fffdf8;
+  --surface-muted: #f2ece3;
+  --inverse-text: #fff8ed;
+  --focus-ring: rgba(154, 106, 67, 0.22);
+}
+
+html[data-theme="theme-2"] {
+  --bg-primary: #f3eee5;
+  --bg-secondary: #171615;
+  --text-primary: #201c1b;
+  --text-secondary: #6d6260;
+  --accent: #4a0e17;
+  --border-color: #d7cbc2;
+  --surface: #fffaf2;
+  --surface-muted: #eae2d8;
+  --inverse-text: #fff7ed;
+  --focus-ring: rgba(74, 14, 23, 0.2);
+}
+
+html[data-theme="theme-3"] {
+  --bg-primary: #181816;
+  --bg-secondary: #222220;
+  --text-primary: #f3f0e9;
+  --text-secondary: #b6b3ad;
+  --accent: #8ca1ad;
+  --border-color: #3b3b37;
+  --surface: #222220;
+  --surface-muted: #2a2a27;
+  --inverse-text: #f7f5f0;
+  --focus-ring: rgba(140, 161, 173, 0.26);
+}
+
+html:not([data-theme]) { color-scheme: light; }
+html[data-theme="theme-3"] { color-scheme: dark; }
+
+html[data-theme] {
+  --color-bg: var(--bg-primary);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-muted);
+  --color-surface-3: var(--surface-muted);
+  --color-border: var(--border-color);
+  --color-primary: var(--accent);
+  --color-primary-strong: var(--accent);
+  --color-text: var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  --color-text-soft: var(--text-secondary);
+}
+
+body { background: var(--bg-primary); color: var(--text-primary); }
+.sidebar { background: var(--bg-secondary); }
+.sidebar__brand h1, .sidebar__link:hover, .sidebar__link--active { color: var(--inverse-text); }
+.sidebar__brand p, .sidebar__link { color: color-mix(in srgb, var(--inverse-text) 72%, transparent); }
+.sidebar__logo { background: var(--accent); color: var(--inverse-text); }
+.sidebar__link:hover, .sidebar__link--active { background: color-mix(in srgb, var(--inverse-text) 12%, transparent); }
+.topbar { background: color-mix(in srgb, var(--bg-primary) 91%, transparent); border-bottom-color: var(--border-color); }
+.topbar__menu-btn, .btn--primary { background: var(--accent); color: var(--inverse-text); }
+.btn--primary:hover { background: var(--bg-secondary); }
+.btn--secondary { background: var(--surface-muted); color: var(--text-primary); border-color: var(--border-color); }
+.btn--ghost { color: var(--text-primary); border-color: var(--border-color); }
+.card, .modal__content, .input, .select, .textarea { background: var(--surface); color: var(--text-primary); border-color: var(--border-color); }
+.metric-card { background: var(--bg-secondary); }
+.metric-card__label, .metric-card__title, .metric-card__detail, .metric-card__trend { color: color-mix(in srgb, var(--inverse-text) 72%, transparent); }
+.metric-card__value { color: var(--inverse-text); }
+.table th, .table td { border-bottom-color: var(--border-color); }
+.table tbody tr:nth-child(even), .table tbody tr:hover, .task-item:hover { background: var(--surface-muted); }
+.task-item, .alert { background: var(--surface); border-color: var(--border-color); }
+.modal__backdrop { background: color-mix(in srgb, var(--bg-secondary) 72%, transparent); }
+.toast { background: var(--bg-secondary); color: var(--inverse-text); }
+.input:focus, .select:focus, .textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }
+
+.theme-switcher { display: inline-flex; align-items: center; gap: 0.55rem; margin-left: auto; color: var(--text-secondary); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.theme-switcher select { appearance: none; min-width: 9.6rem; padding: 0.58rem 1.8rem 0.58rem 0.7rem; border: 1px solid var(--border-color); border-radius: 0; background: var(--surface) linear-gradient(45deg, transparent 50%, var(--text-secondary) 50%) calc(100% - 12px) 50% / 5px 5px no-repeat, linear-gradient(135deg, var(--text-secondary) 50%, transparent 50%) calc(100% - 8px) 50% / 5px 5px no-repeat; color: var(--text-primary); font: inherit; letter-spacing: 0; text-transform: none; }
+.theme-switcher select:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 30rem) {
+  .theme-switcher span { display: none; }
+  .theme-switcher select { min-width: 8.5rem; }
+  .topbar__user { display: none; }
+}
+
+/* ==========================================================================
    Dirección visual: editorial minimalista / estudio oscuro
    Estas reglas preservan la estructura existente y actualizan únicamente la UI.
    ========================================================================== */
@@ -1032,3 +1122,22 @@ body {
     flex-wrap: wrap;
   }
 }
+
+/* Prioridad final de las superficies temáticas sobre estilos heredados. */
+html[data-theme] body { background: var(--bg-primary); color: var(--text-primary); }
+html[data-theme] .sidebar { background: var(--bg-secondary); }
+html[data-theme] .sidebar__brand h1 { color: var(--inverse-text); }
+html[data-theme] .sidebar__brand p, html[data-theme] .sidebar__link { color: color-mix(in srgb, var(--inverse-text) 72%, transparent); }
+html[data-theme] .sidebar__logo, html[data-theme] .btn--primary, html[data-theme] .topbar__menu-btn { background: var(--accent); color: var(--inverse-text); }
+html[data-theme] .sidebar__link:hover, html[data-theme] .sidebar__link--active { background: color-mix(in srgb, var(--inverse-text) 12%, transparent); color: var(--inverse-text); }
+html[data-theme] .topbar { background: color-mix(in srgb, var(--bg-primary) 91%, transparent); border-color: var(--border-color); }
+html[data-theme] .card, html[data-theme] .modal__content, html[data-theme] .input, html[data-theme] .select, html[data-theme] .textarea, html[data-theme] .task-item { background: var(--surface); color: var(--text-primary); border-color: var(--border-color); }
+html[data-theme] .metric-card, html[data-theme] .toast { background: var(--bg-secondary); }
+html[data-theme] .metric-card__value, html[data-theme] .toast { color: var(--inverse-text); }
+html[data-theme] .metric-card__label, html[data-theme] .metric-card__title, html[data-theme] .metric-card__detail, html[data-theme] .metric-card__trend { color: color-mix(in srgb, var(--inverse-text) 72%, transparent); }
+html[data-theme] .table tbody tr:nth-child(even), html[data-theme] .table tbody tr:hover, html[data-theme] .task-item:hover { background: var(--surface-muted); }
+html[data-theme] .table th, html[data-theme] .table td { border-color: var(--border-color); }
+html[data-theme] .btn--secondary { background: var(--surface-muted); color: var(--text-primary); border-color: var(--border-color); }
+html[data-theme] .btn--ghost { color: var(--text-primary); border-color: var(--border-color); }
+html[data-theme] .btn--primary:hover { background: var(--bg-secondary); }
+html[data-theme] .input:focus, html[data-theme] .select:focus, html[data-theme] .textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }
