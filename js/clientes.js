@@ -41,10 +41,10 @@ function renderClients() {
         <td>${cli.categoria}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="${t('edit_client', { name: cli.nombre })}">
               <span class="material-symbols-outlined">edit</span>
             </button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="Eliminar ${cli.nombre}">
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="${t('delete_client', { name: cli.nombre })}">
               <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
@@ -84,13 +84,13 @@ function openModal(client = null) {
   idInput.value = client?.id ?? '';
 
   if (client) {
-    modalTitle.textContent = 'Editar cliente';
+    modalTitle.textContent = t('modal_edit_client_title');
     nameInput.value = client.nombre;
     emailInput.value = client.email;
     phoneInput.value = client.telefono;
     categoryInput.value = client.categoria;
   } else {
-    modalTitle.textContent = 'Nuevo cliente';
+    modalTitle.textContent = t('modal_new_client_title');
   }
 
   modal.hidden = false;
@@ -111,7 +111,7 @@ function saveClient(event) {
   event.preventDefault();
 
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    alert(t('toast_client_blocked'));
     return;
   }
 
@@ -140,10 +140,10 @@ function saveClient(event) {
     if (index >= 0) {
       clientes[index] = payload;
     }
-    showToast('Cliente actualizado correctamente', 'success');
+    showToast(t('toast_client_updated'), 'success');
   } else {
     clientes.push(payload);
-    showToast('Cliente creado correctamente', 'success');
+    showToast(t('toast_client_created'), 'success');
   }
 
   guardar(STORAGE_KEY, clientes);
@@ -153,7 +153,7 @@ function saveClient(event) {
 
 async function handleTableActions(event) {
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    alert(t('toast_client_blocked'));
     return;
   }
 
@@ -176,15 +176,15 @@ async function handleTableActions(event) {
     const isInOrder = pedidos.some(pedido => pedido.clienteId === cliId);
 
     if (isInOrder) {
-      alert(`No se puede eliminar a ${cli.nombre} porque tiene uno o más pedidos asociados.`);
+      alert(t('client_delete_blocked', { name: cli.nombre }));
       return;
     }
 
-    const confirmed = await showConfirm(`¿Deseas eliminar a ${cli.nombre}?`);
+    const confirmed = await showConfirm(t('provider_action_delete', { name: cli.nombre }));
     if (confirmed) {
       const nuevos = clientes.filter((item) => item.id !== cliId);
       guardar(STORAGE_KEY, nuevos);
-      showToast('Cliente eliminado', 'danger');
+      showToast(t('toast_client_deleted'), 'danger');
       renderClients();
     }
   }
@@ -211,7 +211,7 @@ form.querySelectorAll('input, select').forEach((input) => {
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
   button.addEventListener('click', () => {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      alert(t('toast_client_blocked'));
       return;
     }
     openModal();
@@ -251,6 +251,10 @@ if (sidebar) {
 // Inicialización de Storage con cliente predeterminado
 if (!existe(STORAGE_KEY)) {
   guardar(STORAGE_KEY, [DEFAULT_CLIENT]);
+}
+
+if (typeof window.registerI18nRefresh === 'function') {
+  window.registerI18nRefresh(() => renderClients());
 }
 
 // Render Inicial

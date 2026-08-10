@@ -21,18 +21,24 @@ const descriptionInput = document.getElementById('product-description');
 
 let toastTimer = null;
 
+function getProductCountText(count) {
+  if (count === 0) return t('product_count_zero');
+  if (count === 1) return t('product_count_one');
+  return t('product_count_many', { count });
+}
+
 function renderProducts() {
   const productos = obtener(STORAGE_KEY, []);
 
   if (!productos.length) {
     emptyState.hidden = false;
     tableBody.innerHTML = '';
-    countBadge.textContent = '0 productos';
+    countBadge.textContent = getProductCountText(0);
     return;
   }
 
   emptyState.hidden = true;
-  countBadge.textContent = `${productos.length} producto${productos.length > 1 ? 's' : ''}`;
+  countBadge.textContent = getProductCountText(productos.length);
 
   tableBody.innerHTML = productos
     .map((producto) => `
@@ -44,10 +50,10 @@ function renderProducts() {
         <td>${producto.stock}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${producto.id}" aria-label="Editar ${producto.name}">
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${producto.id}" aria-label="${t('edit_product', { name: producto.name })}">
               <span class="material-symbols-outlined">edit</span>
             </button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${producto.id}" aria-label="Eliminar ${producto.name}">
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${producto.id}" aria-label="${t('delete_product', { name: producto.name })}">
               <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
@@ -89,11 +95,11 @@ function openModal(product = null) {
 
   // Populate proveedores dropdown
   const proveedores = obtener('proveedores', []);
-  proveedorInput.innerHTML = '<option value="">Selecciona un proveedor</option>' + 
+  proveedorInput.innerHTML = `<option value="">${t('product_provider_placeholder')}</option>` + 
     proveedores.map(p => `<option value="${p.id}">${p.nombre}</option>`).join('');
 
   if (product) {
-    modalTitle.textContent = 'Editar producto';
+    modalTitle.textContent = t('product_modal_title_edit');
     nameInput.value = product.name;
     categoryInput.value = product.category;
     priceInput.value = product.price;
@@ -101,7 +107,7 @@ function openModal(product = null) {
     proveedorInput.value = product.proveedor || '';
     descriptionInput.value = product.description;
   } else {
-    modalTitle.textContent = 'Nuevo producto';
+    modalTitle.textContent = t('product_modal_title_new');
   }
 
   modal.hidden = false;
@@ -122,7 +128,7 @@ function saveProduct(event) {
   event.preventDefault();
   
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    alert(t('toast_product_error_permissions'));
     return;
   }
 
@@ -153,10 +159,10 @@ function saveProduct(event) {
     if (index >= 0) {
       productos[index] = payload;
     }
-    showToast('Producto actualizado correctamente', 'success');
+    showToast(t('toast_product_updated'), 'success');
   } else {
     productos.push(payload);
-    showToast('Producto creado correctamente', 'success');
+    showToast(t('toast_product_created'), 'success');
   }
 
   guardar(STORAGE_KEY, productos);
@@ -166,7 +172,7 @@ function saveProduct(event) {
 
 async function handleTableActions(event) {
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    alert(t('toast_product_error_permissions'));
     return; // Bloqueo de seguridad
   }
 
@@ -189,15 +195,15 @@ async function handleTableActions(event) {
     const isInOrder = pedidos.some(pedido => pedido.productos.some(p => p.productoId === prodId));
     
     if (isInOrder) {
-      alert(`No se puede eliminar ${prod.name} porque está asociado a uno o más pedidos.`);
+      alert(t('product_delete_blocked', { name: prod.name }));
       return;
     }
 
-    const confirmed = await showConfirm(`¿Deseas eliminar ${prod.name}?`);
+    const confirmed = await showConfirm(t('product_action_delete', { name: prod.name }));
     if (confirmed) {
       const nuevos = productos.filter((item) => item.id !== prodId);
       guardar(STORAGE_KEY, nuevos);
-      showToast('Producto eliminado', 'danger');
+      showToast(t('toast_product_deleted'), 'danger');
       renderProducts();
     }
   }
@@ -228,7 +234,7 @@ form.querySelectorAll('input, select, textarea').forEach((input) => {
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
   button.addEventListener('click', () => {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      alert(t('toast_product_error_permissions'));
       return;
     }
     openModal();
@@ -265,6 +271,10 @@ if (sidebar) {
 
 if (!existe(STORAGE_KEY)) {
   guardar(STORAGE_KEY, []);
+}
+
+if (typeof window.registerI18nRefresh === 'function') {
+  window.registerI18nRefresh(() => renderProducts());
 }
 
 renderProducts();

@@ -50,10 +50,10 @@ function renderProviders() {
         <td>${prov.categoria}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--secondary btn--icon" type="button" data-action="edit" data-id="${prov.id}" aria-label="Editar ${prov.nombre}">
+            <button class="btn btn--secondary btn--icon" type="button" data-action="edit" data-id="${prov.id}" aria-label="${t('edit_provider', { name: prov.nombre })}">
               <span class="material-symbols-outlined">edit</span>
             </button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${prov.id}" aria-label="Eliminar ${prov.nombre}">
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${prov.id}" aria-label="${t('delete_provider', { name: prov.nombre })}">
               <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
@@ -93,13 +93,13 @@ function openModal(provider = null) {
   idInput.value = provider?.id ?? '';
 
   if (provider) {
-    modalTitle.textContent = 'Editar proveedor';
+    modalTitle.textContent = t('provider_modal_title_edit');
     nameInput.value = provider.nombre;
     contactInput.value = provider.contacto;
     phoneInput.value = provider.telefono;
     categoryInput.value = provider.categoria;
   } else {
-    modalTitle.textContent = 'Nuevo proveedor';
+    modalTitle.textContent = t('provider_modal_title_new');
   }
 
   modal.hidden = false;
@@ -143,10 +143,10 @@ function saveProvider(event) {
     if (index >= 0) {
       proveedores[index] = payload;
     }
-    showToast('Proveedor actualizado correctamente', 'success');
+    showToast(t('toast_provider_updated'), 'success');
   } else {
     proveedores.push(payload);
-    showToast('Proveedor creado correctamente', 'success');
+    showToast(t('toast_provider_created'), 'success');
   }
 
   guardar(STORAGE_KEY, proveedores);
@@ -170,11 +170,11 @@ async function handleTableActions(event) {
   }
 
   if (button.dataset.action === 'delete') {
-    const confirmed = await showConfirm(`¿Deseas eliminar a ${prov.nombre}?`);
+    const confirmed = await showConfirm(t('provider_action_delete', { name: prov.nombre }));
     if (confirmed) {
       const nuevos = proveedores.filter((item) => item.id !== provId);
       guardar(STORAGE_KEY, nuevos);
-      showToast('Proveedor eliminado', 'danger');
+      showToast(t('toast_provider_deleted'), 'danger');
       renderProviders();
     }
   }
@@ -235,6 +235,10 @@ if (sidebar) {
 // Inicialización de Storage con proveedor predeterminado
 if (!existe(STORAGE_KEY)) {
   guardar(STORAGE_KEY, [DEFAULT_PROVIDER]);
+}
+
+if (typeof window.registerI18nRefresh === 'function') {
+  window.registerI18nRefresh(() => renderProviders());
 }
 
 // Render Inicial

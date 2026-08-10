@@ -8,11 +8,11 @@ export function showConfirm(message) {
                     <div class="modal__backdrop" id="confirm-modal-backdrop"></div>
                     <div class="modal__content" style="max-width: 400px; text-align: center;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-                        <h3 id="confirm-modal-title" style="margin-bottom: 1rem;">¿Estás seguro?</h3>
+                        <h3 id="confirm-modal-title" style="margin-bottom: 1rem;">${t('confirm_title')}</h3>
                         <p class="modal__description" id="confirm-modal-message" style="margin-bottom: 2rem;">${message}</p>
                         <div class="form-group form-actions" style="justify-content: center; gap: 1rem;">
-                            <button class="btn btn--danger" id="confirm-btn-yes" type="button">Eliminar</button>
-                            <button class="btn btn--ghost" id="confirm-btn-no" type="button">Cancelar</button>
+                            <button class="btn btn--danger" id="confirm-btn-yes" type="button">${t('confirm_delete')}</button>
+                            <button class="btn btn--ghost" id="confirm-btn-no" type="button">${t('confirm_cancel')}</button>
                         </div>
                     </div>
                 </div>

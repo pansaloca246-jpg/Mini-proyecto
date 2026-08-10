@@ -29,12 +29,12 @@ function showToast(message, type = 'success') {
 
 function getClientName(id) {
   const c = obtener('clientes', []).find(x => x.id === id);
-  return c ? c.nombre : 'Cliente Desconocido';
+  return c ? c.nombre : t('client_unknown');
 }
 
 function getProductName(id) {
   const p = obtener('productos', []).find(x => x.id === id);
-  return p ? p.name : 'Producto Eliminado';
+  return p ? p.name : t('product_deleted');
 }
 
 function getProductPrice(id) {
@@ -49,12 +49,12 @@ function renderOrders() {
   if (!pedidos.length) {
     emptyState.hidden = false;
     tableBody.innerHTML = '';
-    countBadge.textContent = '0 pedidos';
+    countBadge.textContent = t('order_count_zero');
     return;
   }
 
   emptyState.hidden = true;
-  countBadge.textContent = `${pedidos.length} pedido${pedidos.length > 1 ? 's' : ''}`;
+  countBadge.textContent = t('order_count_many', { count: pedidos.length });
 
   tableBody.innerHTML = pedidos.map((pedido) => {
     const totalArticulos = pedido.productos.reduce((sum, p) => sum + p.cantidad, 0);
@@ -67,14 +67,14 @@ function renderOrders() {
         <td>$${Number(pedido.total).toFixed(2)}</td>
         <td>
           <select class="select" data-action="status" data-id="${pedido.id}">
-            <option value="Pendiente" ${pedido.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
-            <option value="En proceso" ${pedido.estado === 'En proceso' ? 'selected' : ''}>En proceso</option>
-            <option value="Entregado" ${pedido.estado === 'Entregado' ? 'selected' : ''}>Entregado</option>
+            <option value="Pendiente" ${pedido.estado === 'Pendiente' ? 'selected' : ''}>${t('status_pending')}</option>
+            <option value="En proceso" ${pedido.estado === 'En proceso' ? 'selected' : ''}>${t('status_processing')}</option>
+            <option value="Entregado" ${pedido.estado === 'Entregado' ? 'selected' : ''}>${t('status_delivered')}</option>
           </select>
         </td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${pedido.id}" aria-label="Eliminar pedido">
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${pedido.id}" aria-label="${t('order_delete_button')}">
               <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
@@ -116,7 +116,7 @@ function addProductRow(productoId = '', cantidad = 1) {
 
   const selectHTML = `
     <select class="select product-select" required>
-      <option value="">Selecciona un producto...</option>
+      <option value="">${t('order_products_row_placeholder')}</option>
       ${productos.map(p => `<option value="${p.id}" ${p.id === productoId ? 'selected' : ''}>${p.name} ($${Number(p.price).toFixed(2)})</option>`).join('')}
     </select>
   `;
@@ -125,7 +125,7 @@ function addProductRow(productoId = '', cantidad = 1) {
     ${selectHTML}
     <input type="number" class="input product-qty" min="1" value="${cantidad}" required />
     <span class="product-subtotal">$0.00</span>
-    <button class="btn btn--danger btn--icon btn-remove-row" type="button" aria-label="Eliminar fila">
+    <button class="btn btn--danger btn--icon btn-remove-row" type="button" aria-label="${t('order_row_remove_aria')}">
       <span class="material-symbols-outlined">close</span>
     </button>
   `;
@@ -148,7 +148,7 @@ function openModal() {
   
   // Load clients
   const clientes = obtener('clientes', []);
-  clientSelect.innerHTML = '<option value="">Selecciona un cliente</option>' + 
+  clientSelect.innerHTML = `<option value="">${t('order_select_client')}</option>` + 
     clientes.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
 
   addProductRow();
@@ -163,13 +163,13 @@ function saveOrder(event) {
   event.preventDefault();
 
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    alert(t('toast_client_blocked'));
     return;
   }
 
   const rows = Array.from(productRowsContainer.querySelectorAll('.order-product-row'));
   if (rows.length === 0) {
-    alert("Debes agregar al menos un producto.");
+    alert(t('toast_order_error'));
     return;
   }
 
@@ -184,7 +184,7 @@ function saveOrder(event) {
   });
 
   if (orderProducts.some(p => !p.productoId || p.cantidad <= 0)) {
-    alert("Revisa que todos los productos estén seleccionados y la cantidad sea válida.");
+    alert(t('toast_product_selection_error'));
     return;
   }
 
@@ -201,7 +201,7 @@ function saveOrder(event) {
   pedidos.push(payload); // Currently we only create, not edit existing ones (as per requirements)
   guardar(STORAGE_KEY, pedidos);
 
-  showToast('Pedido creado correctamente', 'success');
+  showToast(t('toast_order_created'), 'success');
   renderOrders();
   closeModal();
 }
@@ -216,36 +216,36 @@ async function handleTableActions(event) {
 
   if (target.dataset.action === 'delete') {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      alert(t('toast_client_blocked'));
       return; // Bloqueo extra de seguridad
     }
-    const confirmed = await showConfirm(`¿Deseas eliminar el pedido #${prodId}?`);
+    const confirmed = await showConfirm(t('order_action_delete', { id: prodId }));
     if (confirmed) {
       pedidos.splice(pedidoIndex, 1);
       guardar(STORAGE_KEY, pedidos);
-      showToast('Pedido eliminado', 'danger');
+      showToast(t('toast_order_deleted'), 'danger');
       renderOrders();
     }
   }
 
   if (target.dataset.action === 'status') {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      alert(t('toast_client_blocked'));
       renderOrders(); // Revert visual change
       return;
     }
     pedidos[pedidoIndex].estado = target.value;
     guardar(STORAGE_KEY, pedidos);
-    showToast('Estado actualizado', 'success');
+    showToast(t('toast_order_status'), 'success');
   }
 }
 
 // Event listeners
-btnAddProduct.addEventListener('click', () => addProductRow());
+btnAddProduct?.addEventListener('click', () => addProductRow());
 form.addEventListener('submit', saveOrder);
 document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => {
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    alert(t('toast_client_blocked'));
     return;
   }
   openModal();
@@ -255,5 +255,9 @@ tableBody.addEventListener('change', handleTableActions);
 tableBody.addEventListener('click', (e) => {
   if (e.target.closest('button')) handleTableActions({ target: e.target.closest('button') });
 });
+
+if (typeof window.registerI18nRefresh === 'function') {
+  window.registerI18nRefresh(() => renderOrders());
+}
 
 renderOrders();

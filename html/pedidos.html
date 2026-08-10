@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <style>
       .order-products { margin-top: 1rem; border-top: 1px solid var(--color-border); padding-top: 1rem; }
       .order-product-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 0.5rem; margin-bottom: 0.5rem; align-items: end; }
@@ -93,12 +93,12 @@
 
           <section class="alert alert--success" aria-label="Resumen de pedidos">
             <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-            <span>Los pedidos reflejan tus ventas en tiempo real. Gestiona sus estados de manera ágil.</span>
+            <span data-i18n="orders_alert">Los pedidos reflejan tus ventas en tiempo real. Gestiona sus estados de manera ágil.</span>
           </section>
 
           <section class="card" aria-labelledby="orders-title">
             <div class="card__header">
-              <h3 id="orders-title">Listado de pedidos</h3>
+              <h3 id="orders-title" data-i18n="orders_list_title">Listado de pedidos</h3>
               <span class="badge badge--info" id="order-count">0 pedidos</span>
             </div>
 
@@ -106,13 +106,13 @@
               <table class="table" aria-describedby="orders-title">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Artículos</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col" data-i18n="table_id">ID</th>
+                    <th scope="col" data-i18n="order_client_column">Cliente</th>
+                    <th scope="col" data-i18n="order_date_column">Fecha</th>
+                    <th scope="col" data-i18n="order_items_column">Artículos</th>
+                    <th scope="col" data-i18n="order_total_column">Total</th>
+                    <th scope="col" data-i18n="order_status_column">Estado</th>
+                    <th scope="col" data-i18n="table_actions">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="orders-table-body"></tbody>
@@ -121,8 +121,8 @@
 
             <div class="empty-state" id="empty-state">
               <span class="material-symbols-outlined empty-state__icon" aria-hidden="true">shopping_cart</span>
-              <h3>No hay pedidos</h3>
-              <p>No hay pedidos registrados todavía. Crea el primero para empezar.</p>
+              <h3 data-i18n="orders_empty_title">No hay pedidos</h3>
+              <p data-i18n="orders_empty">No hay pedidos registrados todavía. Crea el primero para empezar.</p>
             </div>
           </section>
         </main>
@@ -133,7 +133,7 @@
       <div class="modal__backdrop" data-close-modal></div>
       <div class="modal__content" style="max-width: 600px;">
         <header class="modal__header">
-          <h2 class="modal__title" id="modal-title">Registrar Nuevo Pedido</h2>
+          <h2 class="modal__title" id="modal-title" data-i18n="orders_modal_title_new">Registrar Nuevo Pedido</h2>
           <button class="btn btn--ghost btn--icon" id="btn-close-modal" aria-label="Cerrar modal" data-close-modal>
             <span class="material-symbols-outlined">close</span>
           </button>
@@ -144,24 +144,24 @@
 
           <div class="form-grid">
             <div class="form-group form-group--full">
-              <label class="label" for="order-client">Cliente</label>
+              <label class="label" for="order-client" data-i18n="order_client_label">Cliente</label>
               <select class="select" id="order-client" required>
-                <option value="">Selecciona un cliente</option>
+                <option value="" data-i18n="order_select_client">Selecciona un cliente</option>
               </select>
             </div>
 
             <div class="form-group form-group--full">
-              <label class="label" for="order-status">Estado</label>
+              <label class="label" for="order-status" data-i18n="order_status_label">Estado</label>
               <select class="select" id="order-status" required>
-                <option value="Pendiente">Pendiente</option>
-                <option value="En proceso">En proceso</option>
-                <option value="Entregado">Entregado</option>
+                <option value="Pendiente" data-i18n="status_pending">Pendiente</option>
+                <option value="En proceso" data-i18n="status_processing">En proceso</option>
+                <option value="Entregado" data-i18n="status_delivered">Entregado</option>
               </select>
             </div>
           </div>
 
           <div class="order-products">
-            <h4>Productos</h4>
+            <h4 data-i18n="orders_modal_product_title">Productos</h4>
             <div id="product-rows"></div>
             <button class="btn btn--secondary btn--icon" type="button" id="btn-add-product" aria-label="Añadir producto">
               <span class="material-symbols-outlined">add</span>
@@ -170,13 +170,13 @@
           </div>
 
           <div class="order-totals">
-            <p><strong>Total Artículos:</strong> <span id="total-items">0</span></p>
-            <p><strong>Total Pedido:</strong> $<span id="total-price">0.00</span></p>
+            <p><strong data-i18n="order_total_items">Total Artículos:</strong> <span id="total-items">0</span></p>
+            <p><strong data-i18n="order_total">Total Pedido:</strong> $<span id="total-price">0.00</span></p>
           </div>
 
           <div class="modal__actions" style="margin-top: 1rem;">
-            <button class="btn btn--secondary" type="button" data-close-modal>Cancelar</button>
-            <button class="btn btn--primary" type="submit">Guardar pedido</button>
+            <button class="btn btn--secondary" type="button" data-close-modal data-i18n="modal_client_cancel">Cancelar</button>
+            <button class="btn btn--primary" type="submit" data-i18n="order_save">Guardar pedido</button>
           </div>
         </form>
       </div>
@@ -184,7 +184,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     
-    <script src="auth.js"></script>
-    <script type="module" src="pedidos.js"></script>
-  </body>
-</html>
+    <script src="../js/auth.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script type="module" src="../js/pedidos.js"></script>

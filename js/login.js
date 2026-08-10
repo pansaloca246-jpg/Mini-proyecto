@@ -70,12 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validaciones previas de campos vacíos (HTML5 los valida pero reforzamos en JS)
         if (!enteredUser) {
-            showAlert('Por favor, ingresa tu usuario.');
+            showAlert(t('login_empty_user'));
             usernameInput.focus();
             return;
         }
         if (!enteredPass) {
-            showAlert('Por favor, ingresa tu contraseña.');
+            showAlert(t('login_empty_pass'));
             passwordInput.focus();
             return;
         }
@@ -96,11 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Validación detallada
         if (enteredUser !== storedCreds.username) {
             // Si el usuario no coincide
-            showAlert('Usuario inválido');
+            showAlert(t('login_invalid_user'));
             usernameInput.focus();
         } else if (enteredPass !== storedCreds.password) {
             // Si el usuario coincide pero la contraseña no
-            showAlert('Contraseña inválida');
+            showAlert(t('login_invalid_password'));
             passwordInput.focus();
         } else {
             // Si ambas credenciales son correctas, simulamos un éxito de Login temporal
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.style.opacity = '0.8';
-                submitBtn.querySelector('span').textContent = 'Conectando...';
+                submitBtn.querySelector('span').textContent = t('login_connecting');
             }
 
             // Guardamos indicador de sesión activa en localStorage si se requiere
@@ -227,12 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const enteredPass = passwordInput.value.trim();
 
         if (!enteredUser) {
-            showAlert(alertBox, alertMessage, 'Por favor, ingresa tu usuario.');
+            showAlert(alertBox, alertMessage, t('login_empty_user'));
             usernameInput.focus();
             return;
         }
         if (!enteredPass) {
-            showAlert(alertBox, alertMessage, 'Por favor, ingresa tu contraseña.');
+            showAlert(alertBox, alertMessage, t('login_empty_pass'));
             passwordInput.focus();
             return;
         }
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.style.opacity = '0.8';
-                submitBtn.querySelector('span').textContent = 'Conectando...';
+                submitBtn.querySelector('span').textContent = t('login_connecting');
             }
             if (document.getElementById('remember-me')?.checked) {
                 localStorage.setItem('sessionActive', 'true');
@@ -271,17 +271,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPass = document.getElementById('reg-password-confirm').value.trim();
 
         if (!name || !email || !pass || !confirmPass) {
-            showAlert(regAlertBox, regAlertMessage, 'Por favor, completa todos los campos.');
+            showAlert(regAlertBox, regAlertMessage, t('login_required_complete'));
             return;
         }
 
         if (pass.length < 6) {
-            showAlert(regAlertBox, regAlertMessage, 'La contraseña debe tener mínimo 6 caracteres.');
+            showAlert(regAlertBox, regAlertMessage, t('login_password_short'));
             return;
         }
 
         if (pass !== confirmPass) {
-            showAlert(regAlertBox, regAlertMessage, 'Las contraseñas no coinciden.');
+            showAlert(regAlertBox, regAlertMessage, t('login_passwords_mismatch'));
             return;
         }
 
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newCreds = { username: email, password: pass, role: role };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newCreds));
         
-        showAlert(regAlertBox, regAlertMessage, '¡Cuenta creada exitosamente! Inicia sesión.', 'success');
+        showAlert(regAlertBox, regAlertMessage, t('login_account_created'), 'success');
         
         setTimeout(() => {
             regForm.reset();

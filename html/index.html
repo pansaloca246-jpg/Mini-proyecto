@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
   </head>
   <body>
     <div class="app-shell">
@@ -26,31 +26,31 @@
         <nav class="sidebar__nav" aria-label="Navegación principal">
           <a class="sidebar__link sidebar__link--active" href="index.html">
             <span class="material-symbols-outlined" aria-hidden="true">home</span>
-            <span>Inicio</span>
+            <span data-i18n="nav_home">Inicio</span>
           </a>
           <a class="sidebar__link" href="productos.html">
             <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
-            <span>Productos</span>
+            <span data-i18n="nav_products">Productos</span>
           </a>
           <a class="sidebar__link" href="clientes.html">
             <span class="material-symbols-outlined" aria-hidden="true">group</span>
-            <span>Clientes</span>
+            <span data-i18n="nav_clients">Clientes</span>
           </a>
           <a class="sidebar__link" href="proveedores.html">
             <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
-            <span>Proveedores</span>
+            <span data-i18n="nav_providers">Proveedores</span>
           </a>
           <a class="sidebar__link" href="pedidos.html">
             <span class="material-symbols-outlined" aria-hidden="true">list_alt</span>
-            <span>Pedidos</span>
+            <span data-i18n="nav_orders">Pedidos</span>
           </a>
           <a class="sidebar__link" href="resumen.html">
             <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
-            <span>Resumen</span>
+            <span data-i18n="nav_summary">Resumen</span>
           </a>
           <a class="sidebar__link" href="login.html">
             <span class="material-symbols-outlined" aria-hidden="true">logout</span>
-            <span>Cerrar sesión</span>
+            <span data-i18n="nav_logout">Cerrar sesión</span>
           </a>
         </nav>
       </aside>
@@ -69,38 +69,38 @@
         <main class="content">
           <section class="page-header" aria-labelledby="page-title">
             <div>
-              <p class="eyebrow">Panel administrativo</p>
-              <h2 id="page-title">¡Bienvenido de nuevo, Samu!</h2>
-              <p class="greeting-sub" id="greeting-sub">Esperamos que tengas un excelente día.</p>
+              <p class="eyebrow" data-i18n="dashboard_panel_admin">Panel administrativo</p>
+              <h2 id="page-title" data-i18n="welcome_again">¡Bienvenido de nuevo, Samu!</h2>
+              <p class="greeting-sub" id="greeting-sub" data-i18n="greeting_sub">Esperamos que tengas un excelente día.</p>
             </div>
           </section>
 
           <!-- Métricas en Vivo -->
           <section class="metrics-grid" aria-label="Métricas del sistema">
             <div class="metric-card" id="metric-productos">
-              <p class="metric-card__label">Productos</p>
+              <p class="metric-card__label" data-i18n="metric_products_label">Productos</p>
               <p class="metric-card__value" id="metric-productos-value">0</p>
-              <p class="metric-card__detail">registrados en el inventario</p>
+              <p class="metric-card__detail" data-i18n="metric_products_detail">registrados en el inventario</p>
             </div>
             <div class="metric-card" id="metric-clientes">
-              <p class="metric-card__label">Clientes</p>
+              <p class="metric-card__label" data-i18n="metric_clients_label">Clientes</p>
               <p class="metric-card__value" id="metric-clientes-value">0</p>
-              <p class="metric-card__detail">registrados en el sistema</p>
+              <p class="metric-card__detail" data-i18n="metric_clients_detail">registrados en el sistema</p>
             </div>
             <div class="metric-card" id="metric-proveedores">
-              <p class="metric-card__label">Proveedores</p>
+              <p class="metric-card__label" data-i18n="metric_providers_label">Proveedores</p>
               <p class="metric-card__value" id="metric-proveedores-value">0</p>
-              <p class="metric-card__detail">activos en el sistema</p>
+              <p class="metric-card__detail" data-i18n="metric_providers_detail">activos en el sistema</p>
             </div>
             <div class="metric-card" id="metric-pedidos">
-              <p class="metric-card__label">Pedidos</p>
+              <p class="metric-card__label" data-i18n="metric_orders_label">Pedidos</p>
               <p class="metric-card__value" id="metric-pedidos-value">0</p>
-              <p class="metric-card__detail" id="metric-pedidos-detail">$0.00 en ventas</p>
+              <p class="metric-card__detail" id="metric-pedidos-detail" data-i18n="metric_orders_detail">$0.00 en ventas</p>
             </div>
             <div class="metric-card" id="metric-alertas">
-              <p class="metric-card__label">Alertas de Stock</p>
+              <p class="metric-card__label" data-i18n="metric_stock_alerts_label">Alertas de Stock</p>
               <p class="metric-card__value" id="metric-alertas-value">0</p>
-              <p class="metric-card__detail">productos con stock bajo (&le; 5)</p>
+              <p class="metric-card__detail" data-i18n="metric_stock_alerts_detail">productos con stock bajo (&le; 5)</p>
             </div>
           </section>
 
@@ -108,12 +108,12 @@
           <section class="card" aria-labelledby="welcome-title">
             <div class="card__header">
               <div>
-                <p class="eyebrow">Inicio</p>
-                <h3 id="welcome-title">Bienvenida al dashboard</h3>
+                <p class="eyebrow" data-i18n="nav_home">Inicio</p>
+                <h3 id="welcome-title" data-i18n="welcome_dashboard_title">Bienvenida al dashboard</h3>
               </div>
             </div>
             <div class="card__body" style="padding: 0 var(--space-6) var(--space-6);">
-              <p class="card__description">Aquí comienza tu panel operativo. Utiliza el menú lateral para acceder rápidamente a productos, clientes, proveedores y el resumen completo.</p>
+              <p class="card__description" data-i18n="welcome_dashboard_desc">Aquí comienza tu panel operativo. Utiliza el menú lateral para acceder rápidamente a productos, clientes, proveedores y el resumen completo.</p>
             </div>
           </section>
 
@@ -122,12 +122,12 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
               <h3 class="tasks-section__title" id="tasks-title" style="margin-bottom: 0;">
                 <span class="material-symbols-outlined tasks-section__icon">checklist</span>
-                Tareas pendientes de hoy
+                <span data-i18n="task_title">Tareas pendientes de hoy</span>
                 <span class="badge badge--info tasks-badge" id="tasks-pending-count">Cargando...</span>
               </h3>
               <button class="btn btn--primary" data-open-modal="taskModal">
                 <span class="material-symbols-outlined">add</span>
-                <span>Nueva Tarea</span>
+                <span data-i18n="new_task">Nueva Tarea</span>
               </button>
             </div>
             <ul class="tasks-list" id="tasks-list">
@@ -143,7 +143,7 @@
       <div class="modal__backdrop" data-close-modal="taskModal"></div>
       <div class="modal__content">
         <div class="modal__header">
-          <h2 class="modal__title" id="modal-title-task">Nueva Tarea</h2>
+          <h2 class="modal__title" id="modal-title-task" data-i18n="task_modal_title">Nueva Tarea</h2>
           <button class="btn btn--ghost btn--icon" aria-label="Cerrar modal" data-close-modal="taskModal">
             <span class="material-symbols-outlined">close</span>
           </button>
@@ -178,15 +178,16 @@
           </div>
           
           <div class="modal__actions">
-            <button class="btn btn--secondary" type="button" data-close-modal="taskModal">Cancelar</button>
-            <button class="btn btn--primary" type="submit">Guardar Tarea</button>
+            <button class="btn btn--secondary" type="button" data-close-modal="taskModal" data-i18n="task_modal_cancel">Cancelar</button>
+            <button class="btn btn--primary" type="submit" data-i18n="task_modal_save">Guardar Tarea</button>
           </div>
         </form>
       </div>
     </div>
 
     <div id="toast-container" class="toast-container"></div>
-    <script src="auth.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/i18n.js"></script>
     <script>
       // ═══════════════════════════════════════════════════════════════════
       //  Dashboard Dinámico — Lee datos reales de LocalStorage

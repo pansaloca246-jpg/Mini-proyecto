@@ -32,7 +32,7 @@ if (proveedorId) {
   const proveedor = proveedores.find(p => p.id === proveedorId);
   
   if (proveedor) {
-    formTitle.textContent = 'Editar proveedor';
+    formTitle.textContent = t('provider_modal_title_edit');
     idInput.value = proveedor.id;
     nombreInput.value = proveedor.nombre;
     contactoInput.value = proveedor.contacto;
@@ -40,7 +40,7 @@ if (proveedorId) {
     categoriaInput.value = proveedor.categoria;
   }
 } else {
-  formTitle.textContent = 'Crear nuevo proveedor';
+  formTitle.textContent = t('provider_modal_title_new');
 }
 
 form?.addEventListener('submit', (e) => {
@@ -69,11 +69,11 @@ form?.addEventListener('submit', (e) => {
     } else {
       proveedores.push(payload);
     }
-    showToast('Proveedor actualizado correctamente', 'success');
+    showToast(t('toast_provider_updated'), 'success');
   } else {
     // Crear
     proveedores.push(payload);
-    showToast('Proveedor creado correctamente', 'success');
+    showToast(t('toast_provider_created'), 'success');
   }
 
   guardar(STORAGE_KEY, proveedores);
