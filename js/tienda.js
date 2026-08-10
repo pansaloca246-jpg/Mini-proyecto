@@ -37,7 +37,6 @@ function generateId() {
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
-    configurarEventos();
 });
 
 // Carga de productos
