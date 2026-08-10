@@ -202,8 +202,10 @@ function actualizarCarrito() {
 function toggleCheckoutModal(show = true) {
     if (show) {
         checkoutModal.hidden = false;
+        document.body.classList.add('modal-open');
     } else {
         checkoutModal.hidden = true;
+        document.body.classList.remove('modal-open');
         checkoutForm.reset();
     }
 }
