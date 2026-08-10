@@ -105,6 +105,7 @@ function openModal(product = null) {
   }
 
   modal.hidden = false;
+  document.body.classList.add('modal-open');
   window.requestAnimationFrame(() => {
     nameInput.focus();
   });
@@ -112,6 +113,7 @@ function openModal(product = null) {
 
 function closeModal() {
   modal.hidden = true;
+  document.body.classList.remove('modal-open');
   form.reset();
   form.dataset.mode = 'create';
   idInput.value = '';

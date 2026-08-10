@@ -504,6 +504,16 @@ ul {
   padding: var(--space-6);
 }
 
+.modal[hidden] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
 .modal__backdrop {
   position: absolute;
   inset: 0;
@@ -511,7 +521,8 @@ ul {
   backdrop-filter: blur(4px);
 }
 
-.modal__content {
+.modal__content,
+.modal-card {
   position: relative;
   width: min(100%, 40rem);
   background: var(--color-surface);
@@ -520,6 +531,8 @@ ul {
   box-shadow: var(--shadow-lg);
   padding: var(--space-6);
   z-index: 1;
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
 .modal__header {
@@ -911,4 +924,27 @@ ul {
     font-size: 1rem;
     flex-wrap: wrap;
   }
+}
+
+/* ==========================================================================
+   Custom Scrollbar
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }

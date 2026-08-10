@@ -470,11 +470,13 @@
 
       function openModal() {
         taskModal.hidden = false;
+        document.body.classList.add('modal-open');
         taskTitleInput.focus();
       }
 
       function closeModal() {
         taskModal.hidden = true;
+        document.body.classList.remove('modal-open');
         taskForm.reset();
         taskIdInput.value = '';
         errorTaskTitle.textContent = '';

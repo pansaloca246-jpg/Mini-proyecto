@@ -29,6 +29,7 @@ export function showConfirm(message) {
 
         const cleanup = () => {
             modal.hidden = true;
+            document.body.classList.remove('modal-open');
             // Clonamos los nodos para remover los event listeners viejos
             btnYes.replaceWith(btnYes.cloneNode(true));
             btnNo.replaceWith(btnNo.cloneNode(true));
@@ -61,6 +62,7 @@ export function showConfirm(message) {
         document.addEventListener('keydown', handleKeydown);
 
         modal.hidden = false;
+        document.body.classList.add('modal-open');
         // Animación suave de entrada
         const content = modal.querySelector('.modal__content');
         content.style.transform = 'scale(0.95) translateY(10px)';

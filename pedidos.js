@@ -153,10 +153,12 @@ function openModal() {
 
   addProductRow();
   modal.hidden = false;
+  document.body.classList.add('modal-open');
 }
 
 function closeModal() {
   modal.hidden = true;
+  document.body.classList.remove('modal-open');
 }
 
 function saveOrder(event) {
