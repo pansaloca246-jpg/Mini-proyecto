@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -24,31 +25,31 @@
 
         <nav class="sidebar__nav" aria-label="Navegación principal">
           <a class="sidebar__link" href="index.html">
-            <span aria-hidden="true">📊</span>
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
             <span>Inicio</span>
           </a>
           <a class="sidebar__link" href="productos.html">
-            <span aria-hidden="true">📦</span>
+            <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
             <span>Productos</span>
           </a>
           <a class="sidebar__link" href="clientes.html">
-            <span aria-hidden="true">👥</span>
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
             <span>Clientes</span>
           </a>
           <a class="sidebar__link" href="proveedores.html">
-            <span aria-hidden="true">🧾</span>
+            <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
             <span>Proveedores</span>
           </a>
           <a class="sidebar__link" href="pedidos.html">
-            <span aria-hidden="true">🛒</span>
+            <span class="material-symbols-outlined" aria-hidden="true">list_alt</span>
             <span>Pedidos</span>
           </a>
           <a class="sidebar__link sidebar__link--active" href="resumen.html">
-            <span aria-hidden="true">📈</span>
+            <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
             <span>Resumen</span>
           </a>
           <a class="sidebar__link" href="login.html">
-            <span aria-hidden="true">🔐</span>
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
             <span>Cerrar sesión</span>
           </a>
         </nav>
@@ -56,9 +57,11 @@
 
       <div class="main-content">
         <header class="topbar">
-          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">☰</button>
+          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
           <div class="topbar__user">
-            <span aria-hidden="true">👤</span>
+            <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
             <span>Samu · Integrante 2</span>
           </div>
         </header>
@@ -69,17 +72,23 @@
               <p class="eyebrow">Resumen operativo</p>
               <h2 id="page-title">Datos Generales</h2>
             </div>
-            <button id="export-btn" class="btn btn--primary" type="button" style="display: flex; align-items: center; gap: 0.5rem;">
-              <span aria-hidden="true">📥</span>
-              Descargar en Excel
+            <div class="actions-bar">
+            <button class="btn btn--secondary" type="button" onclick="window.print()">
+              <span class="material-symbols-outlined" style="margin-right: 0.5rem;">print</span>
+              <span>Imprimir Reporte</span>
             </button>
+            <button class="btn btn--primary" id="btn-export-excel" type="button">
+              <span class="material-symbols-outlined" style="margin-right: 0.5rem;">download</span>
+              <span>Descargar en Excel</span>
+            </button>
+          </div>
           </section>
 
           <section class="dashboard-cards" aria-label="Métricas de resumen" style="margin-bottom: 2rem;">
             <article class="metric-card">
               <div class="metric-card__header">
                 <h3 class="metric-card__title">Total Productos</h3>
-                <span class="metric-card__icon" aria-hidden="true">📦</span>
+                <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
               </div>
               <div class="metric-card__content">
                 <p class="metric-card__value" id="resumen-productos">0</p>
@@ -92,7 +101,7 @@
             <article class="metric-card">
               <div class="metric-card__header">
                 <h3 class="metric-card__title">Total Clientes</h3>
-                <span class="metric-card__icon" aria-hidden="true">👥</span>
+                <span class="material-symbols-outlined" aria-hidden="true">group</span>
               </div>
               <div class="metric-card__content">
                 <p class="metric-card__value" id="resumen-clientes">0</p>
@@ -105,7 +114,7 @@
             <article class="metric-card">
               <div class="metric-card__header">
                 <h3 class="metric-card__title">Total Proveedores</h3>
-                <span class="metric-card__icon" aria-hidden="true">🧾</span>
+                <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
               </div>
               <div class="metric-card__content">
                 <p class="metric-card__value" id="resumen-proveedores">0</p>
@@ -118,7 +127,7 @@
             <article class="metric-card">
               <div class="metric-card__header">
                 <h3 class="metric-card__title">Total Pedidos</h3>
-                <span class="metric-card__icon" aria-hidden="true">🛒</span>
+                <span class="material-symbols-outlined" aria-hidden="true">list_alt</span>
               </div>
               <div class="metric-card__content">
                 <p class="metric-card__value" id="resumen-pedidos">0</p>

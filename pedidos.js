@@ -74,7 +74,9 @@ function renderOrders() {
         </td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${pedido.id}" aria-label="Eliminar pedido">🗑</button>
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${pedido.id}" aria-label="Eliminar pedido">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
           </div>
         </td>
       </tr>
@@ -123,7 +125,9 @@ function addProductRow(productoId = '', cantidad = 1) {
     ${selectHTML}
     <input type="number" class="input product-qty" min="1" value="${cantidad}" required />
     <span class="product-subtotal">$0.00</span>
-    <button class="btn btn--danger btn--icon btn-remove-row" type="button">✕</button>
+    <button class="btn btn--danger btn--icon btn-remove-row" type="button" aria-label="Eliminar fila">
+      <span class="material-symbols-outlined">close</span>
+    </button>
   `;
 
   row.querySelector('.product-select').addEventListener('change', calculateTotals);

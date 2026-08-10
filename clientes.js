@@ -41,8 +41,12 @@ function renderClients() {
         <td>${cli.categoria}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">✎</button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="Eliminar ${cli.nombre}">🗑</button>
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${cli.id}" aria-label="Editar ${cli.nombre}">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${cli.id}" aria-label="Eliminar ${cli.nombre}">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
           </div>
         </td>
       </tr>

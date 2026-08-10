@@ -44,8 +44,12 @@ function renderProducts() {
         <td>${producto.stock}</td>
         <td>
           <div class="table__actions">
-            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${producto.id}" aria-label="Editar ${producto.name}">✎</button>
-            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${producto.id}" aria-label="Eliminar ${producto.name}">🗑</button>
+            <button class="btn btn--ghost btn--icon" type="button" data-action="edit" data-id="${producto.id}" aria-label="Editar ${producto.name}">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn btn--danger btn--icon" type="button" data-action="delete" data-id="${producto.id}" aria-label="Eliminar ${producto.name}">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
           </div>
         </td>
       </tr>

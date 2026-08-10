@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -24,31 +25,31 @@
 
         <nav class="sidebar__nav" aria-label="Navegación principal">
           <a class="sidebar__link sidebar__link--active" href="index.html">
-            <span aria-hidden="true">📊</span>
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
             <span>Inicio</span>
           </a>
           <a class="sidebar__link" href="productos.html">
-            <span aria-hidden="true">📦</span>
+            <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
             <span>Productos</span>
           </a>
           <a class="sidebar__link" href="clientes.html">
-            <span aria-hidden="true">👥</span>
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
             <span>Clientes</span>
           </a>
           <a class="sidebar__link" href="proveedores.html">
-            <span aria-hidden="true">🧾</span>
+            <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
             <span>Proveedores</span>
           </a>
           <a class="sidebar__link" href="pedidos.html">
-            <span aria-hidden="true">🛒</span>
+            <span class="material-symbols-outlined" aria-hidden="true">list_alt</span>
             <span>Pedidos</span>
           </a>
           <a class="sidebar__link" href="resumen.html">
-            <span aria-hidden="true">📈</span>
+            <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
             <span>Resumen</span>
           </a>
           <a class="sidebar__link" href="login.html">
-            <span aria-hidden="true">🔐</span>
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
             <span>Cerrar sesión</span>
           </a>
         </nav>
@@ -56,9 +57,11 @@
 
       <div class="main-content">
         <header class="topbar">
-          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">☰</button>
+          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
           <div class="topbar__user">
-            <span aria-hidden="true">👤</span>
+            <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
             <span>Samu · Integrante 2</span>
           </div>
         </header>
@@ -118,12 +121,13 @@
           <section class="tasks-section" aria-labelledby="tasks-title">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
               <h3 class="tasks-section__title" id="tasks-title" style="margin-bottom: 0;">
-                <span class="tasks-section__icon">📋</span>
+                <span class="material-symbols-outlined tasks-section__icon">checklist</span>
                 Tareas pendientes de hoy
                 <span class="badge badge--info tasks-badge" id="tasks-pending-count">Cargando...</span>
               </h3>
               <button class="btn btn--primary" data-open-modal="taskModal">
-                <span>+ Nueva Tarea</span>
+                <span class="material-symbols-outlined">add</span>
+                <span>Nueva Tarea</span>
               </button>
             </div>
             <ul class="tasks-list" id="tasks-list">
@@ -140,7 +144,9 @@
       <div class="modal__content">
         <div class="modal__header">
           <h2 class="modal__title" id="modal-title-task">Nueva Tarea</h2>
-          <button class="btn btn--ghost btn--icon" aria-label="Cerrar modal" data-close-modal="taskModal">✕</button>
+          <button class="btn btn--ghost btn--icon" aria-label="Cerrar modal" data-close-modal="taskModal">
+            <span class="material-symbols-outlined">close</span>
+          </button>
         </div>
         <form id="task-form" class="form" novalidate>
           <input type="hidden" id="task-id">
@@ -272,7 +278,7 @@
           const names = lowStockProducts.slice(0, 3).map(p => p.name).join(', ');
           tasks.push({
             id: 'low-stock',
-            icon: '🛒',
+            icon: 'production_quantity_limits',
             priority: 'high',
             title: `Revisar stock bajo (${lowStockProducts.length} producto${lowStockProducts.length > 1 ? 's' : ''})`,
             desc: `Productos con ≤ ${lowStockThreshold} unidades: ${names}${lowStockProducts.length > 3 ? '…' : ''}.`,
@@ -286,7 +292,7 @@
         if (productos.length === 0) {
           tasks.push({
             id: 'no-products',
-            icon: '📦',
+            icon: 'inventory_2',
             priority: 'high',
             title: 'Registrar el primer producto',
             desc: 'No hay productos en el inventario. Crea el primero para comenzar a operar.',
@@ -300,7 +306,7 @@
         if (clientes.length === 0) {
           tasks.push({
             id: 'no-clients',
-            icon: '👥',
+            icon: 'group',
             priority: 'medium',
             title: 'Registrar un cliente',
             desc: 'No hay clientes en el sistema. Agrega al menos uno para llevar el control.',
@@ -314,7 +320,7 @@
         if (proveedores.length === 0) {
           tasks.push({
             id: 'no-providers',
-            icon: '🧾',
+            icon: 'local_shipping',
             priority: 'medium',
             title: 'Registrar un proveedor',
             desc: 'No hay proveedores en el sistema. Agrega al menos uno para asegurar abastecimiento.',
@@ -327,7 +333,7 @@
         // Tarea 5: Revisar resumen operativo
         tasks.push({
           id: 'check-summary',
-          icon: '📈',
+          icon: 'bar_chart',
           priority: 'low',
           title: 'Revisar el resumen operativo',
           desc: `El sistema tiene ${productos.length} productos, ${clientes.length} clientes y ${proveedores.length} proveedores.`,
@@ -340,7 +346,7 @@
         if (productos.length > 0) {
           tasks.push({
             id: 'inventory-value',
-            icon: '💰',
+            icon: 'payments',
             priority: 'low',
             title: 'Verificar valor total del inventario',
             desc: `El valor estimado del inventario es $${totalValue.toLocaleString('es-CR', { minimumFractionDigits: 2 })}. Verifica que esté correcto.`,
@@ -380,13 +386,23 @@
 
         tasksList.innerHTML = tasks.map(task => {
           const isDone = tasksDone.includes(task.id);
-          const iconObj = { 'high': '🔴', 'medium': '🟡', 'low': '🟢' };
-          const displayIcon = task.icon || iconObj[task.priority] || '📋';
+          const iconObj = { 'high': 'flag', 'medium': 'flag', 'low': 'flag' };
+          const displayIcon = task.icon || iconObj[task.priority] || 'checklist';
           const linkHtml = task.link ? `<a href="${task.link}" class="task-link">${task.title}</a>` : task.title;
+
+          // Añadir color de flag según la prioridad
+          let iconColorStyle = '';
+          if (!task.icon) { // Si es custom y usa flag
+            if (task.priority === 'high') iconColorStyle = 'color: var(--danger-color);';
+            else if (task.priority === 'medium') iconColorStyle = 'color: var(--warning-color);';
+            else if (task.priority === 'low') iconColorStyle = 'color: var(--success-color);';
+          }
 
           return `
             <li class="task-item task-item--${task.priority}${isDone ? ' task-item--done' : ''}" data-task-id="${task.id}">
-              <div class="task-item__icon task-item__icon--${task.priority}" aria-hidden="true">${displayIcon}</div>
+              <div class="task-item__icon task-item__icon--${task.priority}" aria-hidden="true">
+                <span class="material-symbols-outlined" style="${iconColorStyle}">${displayIcon}</span>
+              </div>
               <div class="task-item__body">
                 <p class="task-item__title">
                   ${linkHtml}
@@ -396,8 +412,12 @@
               <div class="task-item__meta">
                 <span class="task-item__deadline${task.deadlineUrgent ? ' task-item__deadline--urgent' : ''}">${task.deadline}</span>
                 <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                  <button class="btn btn--ghost btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="edit" data-id="${task.id}" aria-label="Editar tarea">✎</button>
-                  <button class="btn btn--danger btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="delete" data-id="${task.id}" aria-label="Eliminar tarea">🗑</button>
+                  <button class="btn btn--ghost btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="edit" data-id="${task.id}" aria-label="Editar tarea">
+                    <span class="material-symbols-outlined">edit</span>
+                  </button>
+                  <button class="btn btn--danger btn--icon" style="padding: 0; min-height: auto;" type="button" data-action="delete" data-id="${task.id}" aria-label="Eliminar tarea">
+                    <span class="material-symbols-outlined">delete</span>
+                  </button>
                 </div>
               </div>
               <label class="task-item__check" aria-label="Marcar como completada">

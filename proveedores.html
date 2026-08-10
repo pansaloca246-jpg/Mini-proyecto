@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -24,31 +25,31 @@
 
         <nav class="sidebar__nav" aria-label="Navegación principal">
           <a class="sidebar__link" href="index.html">
-            <span aria-hidden="true">📊</span>
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
             <span>Inicio</span>
           </a>
           <a class="sidebar__link" href="productos.html">
-            <span aria-hidden="true">📦</span>
+            <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
             <span>Productos</span>
           </a>
           <a class="sidebar__link" href="clientes.html">
-            <span aria-hidden="true">👥</span>
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
             <span>Clientes</span>
           </a>
           <a class="sidebar__link sidebar__link--active" href="proveedores.html">
-            <span aria-hidden="true">🧾</span>
+            <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
             <span>Proveedores</span>
           </a>
           <a class="sidebar__link" href="pedidos.html">
-            <span aria-hidden="true">🛒</span>
+            <span class="material-symbols-outlined" aria-hidden="true">list_alt</span>
             <span>Pedidos</span>
           </a>
           <a class="sidebar__link" href="resumen.html">
-            <span aria-hidden="true">📈</span>
+            <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
             <span>Resumen</span>
           </a>
           <a class="sidebar__link" href="login.html">
-            <span aria-hidden="true">🔐</span>
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
             <span>Cerrar sesión</span>
           </a>
         </nav>
@@ -56,9 +57,11 @@
 
       <div class="main-content">
         <header class="topbar">
-          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">☰</button>
+          <button class="topbar__menu-btn" id="menu-toggle" type="button" aria-label="Abrir menú lateral">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
           <div class="topbar__user">
-            <span aria-hidden="true">👤</span>
+            <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
             <span>Samu · Integrante 2</span>
           </div>
         </header>
@@ -69,9 +72,24 @@
               <p class="eyebrow">Gestión de proveedores</p>
               <h2 id="page-title">CRUD de proveedores</h2>
             </div>
-            <div class="page-actions">
-              <button class="btn btn--primary" type="button" data-open-modal>Nuevo proveedor</button>
-            </div>
+          </section>
+
+          <div class="actions-bar">
+            <form class="search-form" id="search-form" role="search" aria-label="Buscar proveedores">
+              <div class="search-input-wrapper">
+                <span class="material-symbols-outlined search-icon" aria-hidden="true">search</span>
+                <input class="input" type="search" id="search-input" placeholder="Buscar proveedores por nombre o contacto..." aria-label="Término de búsqueda" />
+              </div>
+            </form>
+            <button class="btn btn--primary" id="btn-add" type="button" aria-haspopup="dialog" aria-expanded="false" data-open-modal>
+              <span class="material-symbols-outlined">add</span>
+              <span>Nuevo Proveedor</span>
+            </button>
+          </div>
+
+          <section class="alert alert--success" aria-label="Resumen de proveedores">
+            <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+            <span>Asegura un abastecimiento constante manteniendo el contacto con tus proveedores.</span>
           </section>
 
           <section class="card" aria-labelledby="proveedores-title">
@@ -112,8 +130,10 @@
       <div class="modal__backdrop" data-close-modal></div>
       <div class="modal__content">
         <header class="modal__header">
-          <h3 id="modal-title">Nuevo proveedor</h3>
-          <button class="btn btn--ghost btn--icon" type="button" data-close-modal aria-label="Cerrar modal">✕</button>
+          <h2 class="modal__title" id="modal-title">Registrar Nuevo Proveedor</h2>
+          <button class="btn btn--ghost btn--icon" id="btn-close-modal" aria-label="Cerrar modal" data-close-modal>
+            <span class="material-symbols-outlined">close</span>
+          </button>
         </header>
         <p class="modal__description" id="modal-description">Completa los datos del proveedor para guardarlo en el sistema.</p>
 

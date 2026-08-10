@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda CRTECH - Catálogo de Productos</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Material Symbols Outlined -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="tienda.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="store-header">
+        <div class="store-container header-content">
+            <a href="tienda.html" class="brand">
+                <span class="material-symbols-outlined brand-icon">shopping_bag</span>
+                <span class="brand-text">CRTECH <span class="brand-accent">Store</span></span>
+            </a>
+            
+            <div class="header-actions">
+                <button class="cart-btn" id="btn-open-cart" aria-label="Abrir carrito">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="store-container hero-content">
+            <h1>Descubre Nuestra Tecnología</h1>
+            <p>Explora el catálogo de productos disponibles. Añade tus favoritos al carrito y realiza tu pedido en minutos.</p>
+        </div>
+    </section>
+
+    <!-- Product Grid -->
+    <main class="store-container main-content">
+        <div class="filters">
+            <div class="search-box">
+                <span class="material-symbols-outlined">search</span>
+                <input type="search" id="search-input" placeholder="Buscar productos...">
+            </div>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+            <!-- Productos renderizados vía JS -->
+            <div class="loading-state">
+                Cargando catálogo...
+            </div>
+        </div>
+        
+        <div class="empty-state" id="empty-state" hidden>
+            <span class="material-symbols-outlined empty-icon">inventory_2</span>
+            <h2>No se encontraron productos</h2>
+            <p>No hay productos disponibles en este momento.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="store-footer">
+        <div class="store-container">
+            <p>&copy; 2026 CRTECH Systems. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Offcanvas (Lateral) -->
+    <div class="cart-backdrop" id="cart-backdrop"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="btn-icon" id="btn-close-cart" aria-label="Cerrar carrito">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        
+        <div class="cart-items" id="cart-items">
+            <!-- Items del carrito renderizados vía JS -->
+            <div class="cart-empty">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <p>Tu carrito está vacío</p>
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="cart-total-amount">$0.00</span>
+            </div>
+            <button class="btn btn-primary btn-block" id="btn-checkout" disabled>
+                Finalizar Compra
+            </button>
+        </div>
+    </aside>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkout-modal" hidden>
+        <div class="modal-backdrop" id="checkout-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Completar Pedido</h2>
+                <button class="btn-icon" id="btn-close-modal" aria-label="Cerrar modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="checkout-form" novalidate>
+                <div class="form-group">
+                    <label for="client-name">Nombre Completo</label>
+                    <input type="text" id="client-name" required placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="client-email">Correo Electrónico</label>
+                    <input type="email" id="client-email" required placeholder="ejemplo@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="client-phone">Teléfono</label>
+                    <input type="tel" id="client-phone" required placeholder="8888-8888">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-checkout">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar Pedido</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Notificación</div>
+
+    <script src="tienda.js"></script>
+</body>
+</html>

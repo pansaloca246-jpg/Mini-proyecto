@@ -6,8 +6,9 @@
     <title>Iniciar Sesión - CR-Tech Systems</title>
     <!-- Google Fonts: Outfit & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="login.css">
@@ -44,9 +45,12 @@
             <div class="forms-slider" id="forms-slider">
                 <!-- Vista Login -->
                 <div class="form-container" id="login-view">
-                    <div class="form-header">
-                        <h2>Bienvenido de nuevo</h2>
-                        <p>Ingresa tus credenciales para acceder a la plataforma administrativa.</p>
+                    <div class="login-card__header">
+                        <div class="login-card__logo-wrapper">
+                          <span class="material-symbols-outlined login-card__logo">admin_panel_settings</span>
+                        </div>
+                        <h1 class="login-card__title">Bienvenido a CRTECH</h1>
+                        <p class="login-card__subtitle">Inicia sesión o regístrate para acceder al panel administrativo</p>
                     </div>
 
                     <!-- Contenedor de Alertas/Errores -->
