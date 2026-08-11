@@ -1,36 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 /* ==========================================================================
    Variables y Configuración Base
    ========================================================================== */
 :root {
-  /* Paleta de Colores (Heredada de CRTECH) */
-  --primary-color: #4f46e5;
-  --primary-hover: #4338ca;
-  --secondary-color: #f1f5f9;
-  --secondary-hover: #e2e8f0;
-  --accent-color: #0ea5e9;
+  --primary-color: #1A1A1A;
+  --primary-hover: #0F0F0F;
+  --secondary-color: #EEE8DE;
+  --secondary-hover: #E2DCCF;
+  --accent-color: #6E6B64;
   
-  --bg-color: #f8fafc;
-  --surface-color: #ffffff;
+  --bg-color: #EAE8E3;
+  --surface-color: #F7F4EE;
   
-  --text-main: #0f172a;
-  --text-muted: #64748b;
+  --text-main: #1F1F1E;
+  --text-muted: #5F5D59;
   
-  --danger-color: #ef4444;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
+  --danger-color: #9D2E2E;
+  --success-color: #2F6B4F;
+  --warning-color: #9D6B1D;
   
-  --border-color: #e2e8f0;
+  --border-color: rgba(26, 26, 26, 0.08);
   
-  /* Sombras y Radios */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 0 rgba(17, 17, 17, 0.04);
+  --shadow-md: 0 10px 24px rgba(17, 17, 17, 0.06);
+  --shadow-lg: 0 18px 40px rgba(17, 17, 17, 0.08);
   
   --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --radius-lg: 0.8rem;
   --radius-full: 9999px;
 
-  /* Layout */
   --max-width: 1200px;
 }
 
@@ -41,8 +40,8 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
+  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(135deg, #f5f0e7 0%, var(--bg-color) 100%);
   color: var(--text-main);
   line-height: 1.5;
   min-height: 100vh;
@@ -51,8 +50,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .store-container {
@@ -357,6 +357,150 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   color: var(--text-muted);
   margin-top: 2rem;
+}
+
+/* ==========================================================================
+   Reestilización Premium
+   ========================================================================== */
+.store-header {
+  background: rgba(247, 244, 238, 0.82);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.brand-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1A1A1A 0%, #232323 100%);
+  color: #ffffff;
+  padding: 4.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero h1 {
+  font-size: clamp(2.15rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  color: rgba(255,255,255,0.76);
+}
+
+.main-content {
+  padding: 2.25rem 1.5rem 2.75rem;
+}
+
+.filters {
+  margin-bottom: 1.5rem;
+}
+
+.search-box input {
+  background: #f8f4eb;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+}
+
+.search-box input:focus {
+  border-color: rgba(26, 26, 26, 0.22);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.08);
+}
+
+.product-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.product-card:hover {
+  transform: none;
+  box-shadow: var(--shadow-md);
+}
+
+.product-title {
+  font-weight: 700;
+}
+
+.product-price {
+  color: var(--text-main);
+}
+
+.btn-add-to-cart {
+  background: var(--primary-color);
+  border-radius: 0.25rem;
+  font-weight: 700;
+}
+
+.btn-add-to-cart:hover {
+  background: var(--primary-hover);
+}
+
+.cart-sidebar {
+  background: var(--surface-color);
+  border-left: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.cart-header,
+.cart-footer {
+  background: var(--surface-color);
+}
+
+.cart-item__img {
+  background: var(--secondary-color);
+  border: 1px solid var(--border-color);
+}
+
+.qty-btn {
+  background: var(--secondary-color);
+}
+
+.qty-input {
+  background: #fcfaf7;
+}
+
+.modal-content {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn {
+  border-radius: 0.25rem;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--secondary-hover);
+}
+
+.toast {
+  background: #1A1A1A;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ==========================================================================
