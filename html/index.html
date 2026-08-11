@@ -185,7 +185,7 @@
       </div>
     </div>
 
-    <div id="toast-container" class="toast-container"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="../js/auth.js"></script>
     <script>
       // ═══════════════════════════════════════════════════════════════════
@@ -210,6 +210,21 @@
       function guardarLS(clave, valor) {
         localStorage.setItem(clave, JSON.stringify(valor));
       }
+
+      // --- Notificaciones Toast ---
+      let toastTimer = null;
+      const toast = document.getElementById('toast');
+      function showToast(message, type = 'success') {
+        clearTimeout(toastTimer);
+        if (toast) {
+          toast.textContent = message;
+          toast.className = `toast toast--visible toast--${type}`;
+          toastTimer = window.setTimeout(() => {
+            toast.className = 'toast';
+          }, 2500);
+        }
+      }
+
 
       // --- Actualizar Usuario Logueado ---
       const sessionData = leerLS('adminCredentials', { username: 'Samu', role: 'admin' });
@@ -487,7 +502,7 @@
         e.preventDefault();
         
         if (window.currentUserRole !== 'admin') {
-          alert("No tienes permisos para modificar datos");
+          showToast("No tienes permisos para modificar datos", "danger");
           return;
         }
 
@@ -528,7 +543,7 @@
       document.querySelectorAll('[data-open-modal="taskModal"]').forEach(b => {
         b.addEventListener('click', () => {
           if (window.currentUserRole !== 'admin') {
-            alert("No tienes permisos para modificar datos");
+            showToast("No tienes permisos para modificar datos", "danger");
             return;
           }
           openModal();
@@ -547,7 +562,7 @@
         if (!btn) return;
         
         if (window.currentUserRole !== 'admin') {
-          alert("No tienes permisos para modificar datos");
+          showToast("No tienes permisos para modificar datos", "danger");
           return;
         }
 

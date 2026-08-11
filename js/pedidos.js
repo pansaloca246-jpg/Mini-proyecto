@@ -165,13 +165,13 @@ function saveOrder(event) {
   event.preventDefault();
 
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    showToast("No tienes permisos para modificar datos", "danger");
     return;
   }
 
   const rows = Array.from(productRowsContainer.querySelectorAll('.order-product-row'));
   if (rows.length === 0) {
-    alert("Debes agregar al menos un producto.");
+    showToast("Debes agregar al menos un producto.", "danger");
     return;
   }
 
@@ -186,7 +186,7 @@ function saveOrder(event) {
   });
 
   if (orderProducts.some(p => !p.productoId || p.cantidad <= 0)) {
-    alert("Revisa que todos los productos estén seleccionados y la cantidad sea válida.");
+    showToast("Revisa que todos los productos estén seleccionados y la cantidad sea válida.", "danger");
     return;
   }
 
@@ -218,7 +218,7 @@ async function handleTableActions(event) {
 
   if (target.dataset.action === 'delete') {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      showToast("No tienes permisos para modificar datos", "danger");
       return; // Bloqueo extra de seguridad
     }
     const confirmed = await showConfirm(`¿Deseas eliminar el pedido #${prodId}?`);
@@ -232,7 +232,7 @@ async function handleTableActions(event) {
 
   if (target.dataset.action === 'status') {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      showToast("No tienes permisos para modificar datos", "danger");
       renderOrders(); // Revert visual change
       return;
     }
@@ -247,7 +247,7 @@ btnAddProduct.addEventListener('click', () => addProductRow());
 form.addEventListener('submit', saveOrder);
 document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => {
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    showToast("No tienes permisos para modificar datos", "danger");
     return;
   }
   openModal();

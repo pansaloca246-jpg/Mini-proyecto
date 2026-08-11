@@ -113,7 +113,7 @@ function saveClient(event) {
   event.preventDefault();
 
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    showToast("No tienes permisos para modificar datos", "danger");
     return;
   }
 
@@ -155,7 +155,7 @@ function saveClient(event) {
 
 async function handleTableActions(event) {
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    showToast("No tienes permisos para modificar datos", "danger");
     return;
   }
 
@@ -178,7 +178,7 @@ async function handleTableActions(event) {
     const isInOrder = pedidos.some(pedido => pedido.clienteId === cliId);
 
     if (isInOrder) {
-      alert(`No se puede eliminar a ${cli.nombre} porque tiene uno o más pedidos asociados.`);
+      showToast(`No se puede eliminar a ${cli.nombre} porque tiene uno o más pedidos asociados.`, "danger");
       return;
     }
 
@@ -213,7 +213,7 @@ form.querySelectorAll('input, select').forEach((input) => {
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
   button.addEventListener('click', () => {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      showToast("No tienes permisos para modificar datos", "danger");
       return;
     }
     openModal();

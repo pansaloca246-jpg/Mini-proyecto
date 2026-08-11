@@ -124,7 +124,7 @@ function saveProduct(event) {
   event.preventDefault();
   
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    showToast("No tienes permisos para modificar datos", "danger");
     return;
   }
 
@@ -168,7 +168,7 @@ function saveProduct(event) {
 
 async function handleTableActions(event) {
   if (window.currentUserRole !== 'admin') {
-    alert("No tienes permisos para modificar datos");
+    showToast("No tienes permisos para modificar datos", "danger");
     return; // Bloqueo de seguridad
   }
 
@@ -191,7 +191,7 @@ async function handleTableActions(event) {
     const isInOrder = pedidos.some(pedido => pedido.productos.some(p => p.productoId === prodId));
     
     if (isInOrder) {
-      alert(`No se puede eliminar ${prod.name} porque está asociado a uno o más pedidos.`);
+      showToast(`No se puede eliminar ${prod.name} porque está asociado a uno o más pedidos.`, "danger");
       return;
     }
 
@@ -230,7 +230,7 @@ form.querySelectorAll('input, select, textarea').forEach((input) => {
 document.querySelectorAll('[data-open-modal]').forEach((button) => {
   button.addEventListener('click', () => {
     if (window.currentUserRole !== 'admin') {
-      alert("No tienes permisos para modificar datos");
+      showToast("No tienes permisos para modificar datos", "danger");
       return;
     }
     openModal();
