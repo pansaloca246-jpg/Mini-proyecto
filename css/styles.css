@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
+  --color-bg-start: #f5f0e7;
   --color-bg: #EAE8E3;
   --color-surface: #F7F4EE;
   --color-surface-2: #EEE8DE;
@@ -16,6 +17,20 @@
   --color-text-muted: #5F5D59;
   --color-text-soft: #3D3C39;
   --color-background: #EAE8E3;
+  --color-sidebar-bg: linear-gradient(180deg, #181818 0%, #1f1f1f 100%);
+  --color-sidebar-text: #f7f4ee;
+  --color-sidebar-link: rgba(255, 255, 255, 0.78);
+  --color-sidebar-link-hover: rgba(255, 255, 255, 0.95);
+  --color-topbar-bg: rgba(247, 244, 238, 0.85);
+  --color-metric-card-bg: linear-gradient(135deg, #1A1A1A 0%, #232323 100%);
+  --color-metric-card-border: rgba(255, 255, 255, 0.08);
+  --color-metric-card-text: #ffffff;
+  --metric-card-label: rgba(255, 255, 255, 0.72);
+  --metric-card-detail: rgba(255, 255, 255, 0.78);
+  --color-form-bg: #f8f4eb;
+  --color-toggle-btn-bg: var(--color-surface);
+  --color-toggle-btn-text: var(--color-text);
+  --color-toggle-btn-border: var(--color-border);
 
   --font-sans: "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
@@ -41,6 +56,40 @@
   --bp-mobile: 30rem;
 }
 
+[data-theme="dark"],
+.dark-mode {
+  --color-bg-start: #0f172a;
+  --color-bg: #111827;
+  --color-surface: #111827;
+  --color-surface-2: #1e293b;
+  --color-surface-3: #0f172a;
+  --color-border: rgba(148, 163, 184, 0.12);
+  --color-primary: #F8FAFC;
+  --color-primary-strong: #E2E8F0;
+  --color-accent: #38bdf8;
+  --color-success: #4ade80;
+  --color-danger: #f87171;
+  --color-warning: #fbbf24;
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-text-soft: #cbd5e1;
+  --color-background: #0f172a;
+  --color-sidebar-bg: linear-gradient(180deg, #0b1120 0%, #111827 100%);
+  --color-sidebar-text: #e2e8f0;
+  --color-sidebar-link: rgba(226, 232, 240, 0.72);
+  --color-sidebar-link-hover: #ffffff;
+  --color-topbar-bg: rgba(15, 23, 42, 0.88);
+  --color-metric-card-bg: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+  --color-metric-card-border: rgba(148, 163, 184, 0.16);
+  --color-metric-card-text: #f8fafc;
+  --metric-card-label: rgba(255, 255, 255, 0.72);
+  --metric-card-detail: rgba(255, 255, 255, 0.78);
+  --color-form-bg: #0f172a;
+  --color-toggle-btn-bg: #1e293b;
+  --color-toggle-btn-text: #e2e8f0;
+  --color-toggle-btn-border: rgba(148, 163, 184, 0.28);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -52,10 +101,29 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background: linear-gradient(135deg, #f5f0e7 0%, var(--color-bg) 100%);
+  background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg) 100%);
   color: var(--color-text);
   line-height: 1.5;
   min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-image 0.25s ease;
+}
+
+body,
+.app-shell,
+.sidebar,
+.topbar,
+.card,
+.metric-card,
+.btn,
+.input,
+.select,
+.textarea,
+.modal__content,
+.toast,
+.table th,
+.table td,
+.sidebar__link {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-image 0.25s ease;
 }
 
 a {
@@ -101,7 +169,8 @@ ul {
 }
 
 .sidebar {
-  background: rgba(15, 23, 42, 0.95);
+  background: var(--color-sidebar-bg);
+  color: var(--color-sidebar-text);
   border-right: 1px solid var(--color-border);
   padding: var(--space-6);
   display: flex;
@@ -151,14 +220,14 @@ ul {
   gap: var(--space-3);
   padding: 0.8rem 0.95rem;
   border-radius: var(--radius-md);
-  color: var(--color-text-soft);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--color-sidebar-link);
 }
 
 .sidebar__link:hover,
 .sidebar__link--active {
-  background: rgba(54, 184, 255, 0.16);
-  color: var(--color-text);
+  background: rgba(56, 189, 248, 0.18);
+  color: var(--color-sidebar-link-hover);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .main-content {
@@ -173,7 +242,7 @@ ul {
   justify-content: space-between;
   padding: var(--space-6) var(--space-8);
   border-bottom: 1px solid var(--color-border);
-  background: rgba(7, 17, 31, 0.65);
+  background: var(--color-topbar-bg);
   backdrop-filter: blur(12px);
 }
 
@@ -263,19 +332,20 @@ ul {
 }
 
 .metric-card {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.85));
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--color-metric-card-bg);
+  border: 1px solid var(--color-metric-card-border);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  color: var(--color-metric-card-text);
 }
 
 .metric-card__label {
   margin: 0;
   font-size: 0.9rem;
-  color: var(--color-text-muted);
+  color: var(--metric-card-label);
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
@@ -284,12 +354,12 @@ ul {
   margin: 0;
   font-size: 2.5rem;
   font-family: var(--font-display);
-  color: var(--color-text);
+  color: var(--color-metric-card-text);
 }
 
 .metric-card__detail {
   margin: 0;
-  color: var(--color-text-soft);
+  color: var(--metric-card-detail);
   line-height: 1.5;
 }
 
@@ -388,7 +458,7 @@ ul {
 }
 
 .btn--ghost {
-  color: var(--color-text-soft);
+  color: var(--color-text);
   background: transparent;
   border-color: var(--color-border);
 }
@@ -402,10 +472,10 @@ ul {
 }
 
 .sidebar {
-  background: linear-gradient(180deg, #181818 0%, #1f1f1f 100%);
-  color: #f7f4ee;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.04);
+  background: var(--color-sidebar-bg);
+  color: var(--color-sidebar-text);
+  border-right: 1px solid var(--color-border);
+  box-shadow: none;
 }
 
 .sidebar__brand h1 {
@@ -413,37 +483,49 @@ ul {
   font-size: 1.1rem;
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: #ffffff;
+  color: var(--color-sidebar-text);
 }
 
 .sidebar__brand p {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-text-muted);
 }
 
 .sidebar__link {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--color-sidebar-link);
   border: 1px solid transparent;
   padding: 0.85rem 0.95rem;
 }
 
 .sidebar__link:hover,
 .sidebar__link--active {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: rgba(56, 189, 248, 0.18);
+  color: var(--color-sidebar-link-hover);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
 .topbar {
-  background: rgba(247, 244, 238, 0.85);
+  background: var(--color-topbar-bg);
   backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--color-border);
 }
 
-.topbar__menu-btn {
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
+.topbar__menu-btn,
+.theme-toggle-btn {
+  border: 1px solid var(--color-toggle-btn-border);
+  background: var(--color-toggle-btn-bg);
+  color: var(--color-toggle-btn-text);
   border-radius: var(--radius-sm);
+  padding: 0.75rem 0.95rem;
+  min-width: 4.5rem;
+}
+
+.theme-toggle-btn {
+  font-weight: 600;
+  transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-1px);
 }
 
 .content {
@@ -472,17 +554,17 @@ ul {
 }
 
 .metric-card {
-  background: linear-gradient(135deg, #1A1A1A 0%, #232323 100%);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-metric-card-bg);
+  color: var(--color-metric-card-text);
+  border: 1px solid var(--color-metric-card-border);
 }
 
 .metric-card__label {
-  color: rgba(255,255,255,0.72);
+  color: var(--metric-card-label);
 }
 
 .metric-card__detail {
-  color: rgba(255,255,255,0.78);
+  color: var(--metric-card-detail);
 }
 
 .btn {
@@ -522,7 +604,7 @@ ul {
 .input,
 .select,
 .textarea {
-  background: #f8f4eb;
+  background: var(--color-form-bg);
   border: 1px solid var(--color-border);
   color: var(--color-text);
   border-radius: var(--radius-sm);
